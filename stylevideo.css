@@ -92,6 +92,11 @@
   display: none;
 }
 
+.progress-container {
+  width: 100%;
+  padding: 10px 0;  /* espaço em cima e embaixo */
+}
+
 .progress-bar {
   background: #f0f0f0;
   height: 4px;
