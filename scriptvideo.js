@@ -14,6 +14,10 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerReady(event) {
     updateStatus('Vídeo carregado. Clique em play!');
+    // Forçar qualidade HD se disponível
+    if (player && player.setPlaybackQuality) {
+        player.setPlaybackQuality('hd1080');
+    }
 }
 
 function onPlayerStateChange(event) {
