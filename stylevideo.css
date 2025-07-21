@@ -1,8 +1,10 @@
-/* === ESTILOS DO COMPONENTE DE VÍDEO === */
+
+/* === ESTILOS DO COMPONENTE DE VÍDEO CORRIGIDO === */
 .video-component {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
+  padding-bottom: 20px; /* garante espaço extra abaixo */
 }
 
 .video-wrapper {
@@ -95,10 +97,12 @@
   height: 4px;
   border-radius: 2px;
   margin-top: 15px;
+  margin-bottom: 10px; /* novo: espaço abaixo */
   overflow: hidden;
 }
 
 .progress-fill {
+  display: block; /* garante que é bloco */
   background: #4ade80;
   height: 100%;
   width: 0%;
