@@ -1,10 +1,15 @@
-
 /* === ESTILOS DO COMPONENTE DE VÍDEO CORRIGIDO === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .video-component {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
-  padding-bottom: 20px; /* garante espaço extra abaixo */
+  padding-bottom: 20px;
 }
 
 .video-wrapper {
@@ -40,6 +45,10 @@
   justify-content: center;
   border-radius: 8px;
   z-index: 10;
+
+  /* NOVO: garante visibilidade e rolagem se necessário */
+  padding: 20px;
+  overflow-y: auto;
 }
 
 .question-card {
@@ -94,7 +103,7 @@
 
 .progress-container {
   width: 100%;
-  padding: 10px 0;  /* espaço em cima e embaixo */
+  padding: 10px 0;
 }
 
 .progress-barvi {
@@ -102,12 +111,12 @@
   height: 4px;
   border-radius: 2px;
   margin-top: 15px;
-  margin-bottom: 10px; /* novo: espaço abaixo */
+  margin-bottom: 10px;
   overflow: hidden;
 }
 
 .progress-fill {
-  display: block; /* garante que é bloco */
+  display: block;
   background: #a78bfa;
   height: 100%;
   width: 0%;
@@ -122,19 +131,39 @@
   text-align: center;
 }
 
-/* Responsivo */
+/* === RESPONSIVIDADE === */
 @media (max-width: 768px) {
   .question-card {
     padding: 20px;
-    max-width: 350px;
+    max-width: 90%;
   }
 
   .question-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .option {
-    padding: 10px 16px;
-    font-size: 0.9rem;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .question-card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .question-title {
+    font-size: 0.95rem;
+  }
+
+  .option {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .feedback {
+    font-size: 0.8rem;
   }
 }
