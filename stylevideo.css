@@ -149,27 +149,27 @@
 /* === RESPONSIVIDADE ESPECÍFICA PARA CELULAR VERTICAL === */
 @media screen and (max-width: 480px) and (orientation: portrait) {
   .question-overlay {
-    padding: 8px;
+    padding: 5px;
   }
   .question-card {
-    max-width: 65%;
-    width: 65%;
-    padding: 10px;
+    max-width: 50%;
+    width: 50%;
+    padding: 8px;
   }
   .question-title {
-    font-size: 0.8rem;
-    margin-bottom: 6px;
+    font-size: 0.7rem;
+    margin-bottom: 4px;
   }
   .option {
-    font-size: 0.75rem;
-    padding: 5px 8px;
+    font-size: 0.65rem;
+    padding: 4px 6px;
   }
   .options {
-    gap: 6px;
+    gap: 4px;
   }
   .feedback {
-    font-size: 0.7rem;
-    padding: 4px 6px;
-    margin-top: 6px;
+    font-size: 0.6rem;
+    padding: 3px 4px;
+    margin-top: 4px;
   }
 }
