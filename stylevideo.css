@@ -131,11 +131,29 @@
   text-align: center;
 }
 
-/* === RESPONSIVIDADE === */
+/* Responsivo geral */
 @media (max-width: 768px) {
   .question-card {
     padding: 20px;
-    max-width: 90%;
+    max-width: 350px;
+    width: 90%; /* já tem, mas reforça o comportamento fluido */
+  }
+
+  .question-title {
+    font-size: 1.1rem;
+  }
+
+  .option {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Ajustes para telas MUITO pequenas (ex: celulares pequenos) */
+@media (max-width: 480px) {
+  .question-card {
+    padding: 15px;
+    max-width: 90%; /* força o card a usar quase toda a largura disponível */
   }
 
   .question-title {
@@ -143,27 +161,7 @@
   }
 
   .option {
-    padding: 10px 14px;
-    font-size: 0.95rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .question-card {
-    padding: 12px;
-    border-radius: 10px;
-  }
-
-  .question-title {
-    font-size: 0.95rem;
-  }
-
-  .option {
-    padding: 8px 12px;
     font-size: 0.85rem;
-  }
-
-  .feedback {
-    font-size: 0.8rem;
+    padding: 8px 14px;
   }
 }
