@@ -1,0 +1,109 @@
+.sumario-container {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  border-radius: 12px;
+  border-left: 4px solid #2196F3;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  backdrop-filter: blur(10px);
+  margin-bottom: 200px;
+}
+
+.sumario-titulo {
+  color: #1976d2;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.unidade {
+  margin-bottom: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.unidade:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.unidade-header {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  cursor: pointer;
+  user-select: none;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 1.05em;
+  transition: all 0.3s ease;
+}
+
+.unidade-header:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.expand-icon {
+  margin-right: 12px;
+  font-size: 0.9em;
+  transition: transform 0.3s ease;
+  color: #34495e;
+}
+
+.unidade.expanded .expand-icon {
+  transform: rotate(90deg);
+}
+
+.unidade.expanded .unidade-header {
+  background: rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.subtopicos {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.subtopicos.expanded {
+  max-height: none;
+  opacity: 1;
+}
+
+.subtopico {
+  padding: 12px 20px 12px 50px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.subtopico:last-child {
+  border-bottom: none;
+}
+
+.subtopico:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+.subtopico-link {
+  color: #1976d2;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.subtopico-link:hover {
+  color: #0d47a1;
+  text-decoration: underline;
+}
+
+.subtopico-link:active {
+  color: #1565c0;
+}
