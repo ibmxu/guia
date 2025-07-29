@@ -85,7 +85,8 @@
 .iframe-container {
   width: 100%;
   max-width: 500px;
-  height: 350px;
+  /* Removido height fixo, usando aspect-ratio */
+  aspect-ratio: 16 / 9; /* ou use a proporção que preferir */
   margin: 20px auto;
   border: 3px solid #4CAF50;
   border-radius: 12px;
@@ -101,6 +102,9 @@
   height: 100%;
   border: none;
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .iframe-placeholder {
