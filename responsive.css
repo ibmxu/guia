@@ -55,19 +55,12 @@
   }
 
   /* IFrames */
-  .iframe-container {
-    width: 100%;
+.iframe-container {
     max-width: 100%;
-    aspect-ratio: 16 / 9;
-    margin: 0 auto 20px auto; /* <-- Aqui está o ajuste feito */
-    border: 3px solid #4CAF50;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    background: white;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 15px auto;
+    aspect-ratio: 4 / 3; /* Proporção melhor para tablet */
   }
+}
 
   /* Navegação */
   .page-indicator {
@@ -166,5 +159,15 @@
   /* Sumário Mobile */
   .sumario-container {
     margin-bottom: 40px;
+  }
+}
+
+  /* iframe */
+
+.iframe-container {
+    margin: 10px auto 20px auto;
+    border-width: 2px;
+    border-radius: 8px;
+    aspect-ratio: 3 / 2; /* Proporção melhor para mobile */
   }
 }
