@@ -62,6 +62,23 @@
   }
 }
 
+
+.responsive-iframe {
+    height: 450px; /* Altura reduzida para tablet */
+    margin: 15px auto;
+    border-radius: 6px;
+  }
+  
+  .iframe-wrapper {
+    margin: 15px auto;
+    border-radius: 6px;
+  }
+  
+  .iframe-wrapper iframe {
+    height: 450px;
+  }
+}
+
   /* Navegação */
   .page-indicator {
     margin: 0 15px;
@@ -169,5 +186,23 @@
     border-width: 2px;
     border-radius: 8px;
     aspect-ratio: 3 / 2; /* Proporção melhor para mobile */
+  }
+}
+
+
+.responsive-iframe {
+    height: 350px; /* Altura menor para mobile */
+    margin: 10px auto 20px auto;
+    border-radius: 4px;
+  }
+  
+  .iframe-wrapper {
+    margin: 10px auto 20px auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .iframe-wrapper iframe {
+    height: 350px;
   }
 }
