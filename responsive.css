@@ -130,8 +130,9 @@
     margin-bottom: 40px;
   }
   /* IFrame Único */
-  .iframe {
-    height: 250px;
+.iframe {
+    height: 60vh;
+    min-height: 350px;
     margin: 10px auto;
   }
 }
