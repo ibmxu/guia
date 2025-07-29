@@ -43,8 +43,9 @@
     font-size: 1.2em;
   }
   /* IFrame Único */
-  .iframe {
-    height: 300px;
+.iframe {
+    height: 70vh;
+    min-height: 450px;
     margin: 15px auto;
   }
   /* Navegação */
