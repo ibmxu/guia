@@ -59,7 +59,7 @@
     width: 100%;
     max-width: 100%;
     aspect-ratio: 16 / 9;
-    margin: 20px auto;
+    margin: 0 auto 20px auto; /* <-- Aqui está o ajuste feito */
     border: 3px solid #4CAF50;
     border-radius: 12px;
     overflow: hidden;
@@ -114,23 +114,23 @@
   .cover-page {
     padding: 10px 15px;
   }
-  
+
   /* Layout Geral */
   .page-content {
     gap: 15px;
     padding-bottom: 120px;
   }
-  
+
   /* Caixas de Conteúdo */
   .text-box {
     margin-bottom: 25px;
   }
-  
+
   .highlight-box {
     margin-top: 10px;
     margin-bottom: 40px;
   }
-  
+
   /* Navegação */
   .navigation {
     bottom: 10px;
@@ -140,21 +140,21 @@
     border-radius: 0;
     justify-content: space-between;
   }
-  
+
   .nav-btn {
     padding: 12px 20px;
     font-size: 13px;
     flex: 1;
     max-width: 35%;
   }
-  
+
   .home-btn {
     width: 40px;
     height: 40px;
     font-size: 14px;
     flex-shrink: 0;
   }
-  
+
   .page-indicator {
     position: absolute;
     left: 50%;
