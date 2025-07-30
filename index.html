@@ -4,633 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Digital de Ciências</title>
-	
-	<!-- inicio animação particulas -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-
-<!-- fim animação particulas -->
-	<link rel="stylesheet" href="https://ibmxu.github.io/guia/stylevideo.css">
-   <style>
-  * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Georgia', serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  line-height: 1.6;
-}
-
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.page {
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  margin-bottom: 30px;
-  min-height: 85vh;
-  position: relative;
-  overflow: hidden;
-  display: none;
-  animation: fadeIn 0.8s ease-in;
-}
-
-.page.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.page-header {
-  background: linear-gradient(45deg, #4CAF50, #45a049);
-  color: white;
-  padding: 40px 30px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.page-header #animacao-biologica {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.page-header #animacao-biologica canvas {
-  width: 100% !important;
-  height: 100% !important;
-  border: none;
-  border-radius: 0;
-  opacity: 0.3;
-}
-
-.page-header-content {
-  position: relative;
-  z-index: 2;
-}
-
-.page-header h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-
-.page-header p {
-  font-size: 1.2em;
-  opacity: 0.9;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-}
-
-.page-content {
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-.content-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-.text-content {
-  flex: 1;
-  min-width: 280px;
-}
-
-.visual-content {
-  flex: 1;
-  min-width: 300px;
-  text-align: center;
-}
-
-.text-box {
-  background: #f8f9fa;
-  padding: 25px;
-  border-radius: 12px;
-  border-left: 5px solid #4CAF50;
-  margin-bottom: 5px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.text-box:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-.text-box h3 {
-  color: #2c3e50;
-  margin-bottom: 15px;
-  font-size: 1.4em;
-  font-weight: bold;
-}
-
-.text-box p {
-  color: #555;
-  font-size: 1em;
-  text-align: justify;
-}
-
-.image-container {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto 20px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.image-container:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-.image-container img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.iframe-container {
-  width: 100%;
-  max-width: 500px;
-  height: 350px;
-  margin: 20px auto;
-  border: 3px solid #4CAF50;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  background: white;
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.iframe-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
-}
-
-.iframe-placeholder {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #666;
-  font-style: italic;
-}
-
-/* === NAVEGAÇÃO COM BOTÃO HOME CENTRAL === */
-.navigation {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,0.95);
-  padding: 15px 25px;
-  border-radius: 50px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.nav-btn {
-  background: #4CAF50;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  font-size: 14px;
-}
-
-.nav-btn:hover {
-  background: #45a049;
-  transform: translateY(-2px);
-}
-
-.nav-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* Botão Home - mesmo estilo do header */
-.home-btn {
-  background-color: white;
-  border: 2px solid #2e7d32; /* borda verde */
-  border-radius: 50%;
-  cursor: pointer;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.15s ease-out, background-color 0.15s ease-out, box-shadow 0.15s ease-out;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%232e7d32'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 24px 24px;
-}
-
-.home-btn:hover {
-  background-color: #f2f2f2; /* cinza claro no hover */
-  transform: scale(1.2); /* salto VISÍVEL */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* sombra forte */
-}
-
-.home-btn:active {
-  background-color: #e0e0e0; /* cinza mais escuro ao clique/toque */
-  transform: scale(1.15); /* leve redução pra dar sensação de clique */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-.page-indicator {
-  display: inline-block;
-  margin: 0 15px;
-  font-weight: bold;
-  color: #333;
-  font-size: 14px;
-}
-
-.highlight-box {
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  padding: 20px;
-  border-radius: 10px;
-  border-left: 4px solid #2196F3;
-  margin-top: 0px;
-  margin-bottom: 200px; /* Mais espaço para os botões fixos */
-}
-
-.highlight-box h4 {
-  color: #1976d2;
-  margin-bottom: 10px;
-  font-size: 1.2em;
-}
-
-.sumario-text {
-  text-align: left;
-  line-height: 2;
-  margin-left: 10px;
-}
-
-.sumario-link {
-  display: inline-block;
-  color: #1976d2;
-  text-decoration: none;
-  padding: 8px 12px;
-  margin: 2px 0;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  border: 1px solid transparent;
-}
-
-.sumario-link:hover {
-  background: rgba(25, 118, 210, 0.1);
-  border-color: #1976d2;
-  transform: translateX(5px);
-}
-
-.sumario-link:active {
-  transform: translateX(3px);
-  background: rgba(25, 118, 210, 0.2);
-}
-
-.cover-page {
-  text-align: center;
-  padding: 60px 30px;
-}
-
-.cover-title {
-  font-size: 3em;
-  color: #2c3e50;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-}
-
-.cover-subtitle {
-  font-size: 1.5em;
-  color: #7f8c8d;
-  margin-bottom: 40px;
-}
-
-.cover-image {
-  max-width: 400px;
-  margin: 30px auto;
-}
-
-.progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 4px;
-  background: #4CAF50;
-  transition: width 0.3s ease;
-  z-index: 1001;
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
-
-  .page {
-    margin-bottom: 20px;
-    border-radius: 10px;
-    min-height: 90vh; /* Aumenta altura mínima para dar mais espaço */
-  }
-
-  .page-header {
-    padding: 25px 20px;
-  }
-
-  .page-header h1 {
-    font-size: 2em;
-  }
-
-  .page-header p {
-    font-size: 1em;
-  }
-
-  .page-content {
-    padding: 20px;
-    gap: 5px;
-    padding-bottom: 150px; /* Espaço extra para navegação */
-  }
-
-  .content-section {
-    flex-direction: column;
-  }
-
-  .text-content, .visual-content {
-    min-width: 100%;
-  }
-
-  .text-box {
-    padding: 20px;
-  }
-
-  .text-box h3 {
-    font-size: 1.2em;
-  }
-
- .iframe-container {
-  width: 100%;
-  max-width: 100%; /* usa toda a largura do contêiner pai */
-  aspect-ratio: 16 / 9; /* proporção padrão de vídeo */
-  margin: 20px auto;
-  border: 3px solid #4CAF50;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  background: white;
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-
-  .page-indicator {
-    margin: 0 15px;
-    font-size: 13px;
-    white-space: nowrap;
-  }
-
-  .cover-title {
-    font-size: 2.2em;
-  }
-
-  .cover-subtitle {
-    font-size: 1.2em;
-  }
-
-  .highlight-box {
-    margin-bottom: 140px; /* Ainda mais espaço em tablets */
-  }
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  /* === PÁGINA DE CAPA === */
-  .cover-page {
-    padding: 10px 15px;
-  }
-  
-  /* === LAYOUT GERAL === */
-  .page-content {
-    gap: 15px;
-    padding-bottom: 120px;
-  }
-  
-  /* === CAIXAS DE CONTEÚDO === */
-  .text-box {
-    margin-bottom: 25px;
-  }
-  
-  .highlight-box {
-    margin-top: 10px;
-    margin-bottom: 40px;
-  }
-  
-  /* === NAVEGAÇÃO === */
-  .navigation {
-    bottom: 10px;
-    padding: 12px 15px;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 0;
-    justify-content: space-between;
-  }
-  
-  .nav-btn {
-    padding: 12px 20px;
-    font-size: 13px;
-    flex: 1;
-    max-width: 35%;
-  }
-  
-  .home-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-  
-  .page-indicator {
-    position: absolute;
-    left: 50%;
-    bottom: 60px;
-    transform: translateX(-50%);
-    font-size: 14px;
-  }
-}
-  
-
-
-
-
-
-/* === SUMÁRIO EXPANDÍVEL DO STYLE 2 INTEGRADO === */
-.sumario-container {
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  border-radius: 12px;
-  border-left: 4px solid #2196F3;
-  padding: 25px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  backdrop-filter: blur(10px);
-  margin-bottom: 200px;
-}
-
-.sumario-titulo {
-  color: #1976d2;
-  font-size: 1.4em;
-  font-weight: bold;
-  margin-bottom: 20px;
-  margin-top: 0;
-}
-
-.unidade {
-  margin-bottom: 8px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.unidade:hover {
-  background: rgba(255, 255, 255, 0.4);
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-}
-
-.unidade-header {
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
-  cursor: pointer;
-  user-select: none;
-  color: #2c3e50;
-  font-weight: 600;
-  font-size: 1.05em;
-  transition: all 0.3s ease;
-}
-
-.unidade-header:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.expand-icon {
-  margin-right: 12px;
-  font-size: 0.9em;
-  transition: transform 0.3s ease;
-  color: #34495e;
-}
-
-.unidade.expanded .expand-icon {
-  transform: rotate(90deg);
-}
-
-.unidade.expanded .unidade-header {
-  background: rgba(255, 255, 255, 0.3);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.subtopicos {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-  opacity: 0;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.subtopicos.expanded {
- max-height: none;  /* Remove limite de altura */
-  opacity: 1;
-}
-
-.subtopico {
-  padding: 12px 20px 12px 50px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-.subtopico:last-child {
-  border-bottom: none;
-}
-
-.subtopico:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateX(5px);
-}
-
-.subtopico-link {
-  color: #1976d2;
-  text-decoration: none;
-  font-size: 1em;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.subtopico-link:hover {
-  color: #0d47a1;
-  text-decoration: underline;
-}
-
-.subtopico-link:active {
-  color: #1565c0;
-}
-
-/* === RESPONSIVIDADE DO SUMÁRIO === */
-@media (max-width: 768px) {
-  .sumario-container {
-    padding: 20px;
-    margin-bottom: 140px;
-  }
-
-  .unidade-header {
-    padding: 12px 15px;
-    font-size: 1em;
-  }
-
-  .subtopico {
-    padding: 10px 15px 10px 40px;
-  }
-}
-
-@media (max-width: 480px) {
-  .sumario-container {
-    margin-bottom: 40px;
-  }
-}
-
-</style>
-
-	
+    
+    <!-- API- Animação de Partículas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    
+    <!-- CSS Modularizado - Links GitHub -->
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/base.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/pages.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/components.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/navigation.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/summary.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/responsive.css">
+    
+    <!-- CSS personalizado - Vídeo -->
+    <link rel="stylesheet" href="https://ibmxu.github.io/guia/stylevideo.css">
 </head>
 <body>
     <div class="progress-bar" id="progressBar"></div>
@@ -677,6 +64,8 @@ body {
 				    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(6)">1.6 Biodiversidade na Xilogravura e Cordel</a></div>
 					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(7)">1.7 Cadeias Alimentares e Teias Alimentares</a></div>
 					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(8)">1.8 Produtores, Consumidores e Decompositores</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(9)">1.9  Impactos Ambientais e Sustentabilidade</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(10)">1.10 Importância da Educação Ambiental</a></div>
 					</div></div>
 
 
@@ -686,29 +75,141 @@ body {
                     <div class="unidade-header" onclick="toggleUnidade('unidade2')">
                     <span class="expand-icon">▶</span> Unidade 2 – O planeta Terra </div>
                     <div class="subtopicos" id="subtopicos2"> <!-- codigo pra criar subtopico -->
-                    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(1)">1.1 Introdução</a></div>
-                    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(2)">1.2 Conceitos principais</a></div></div></div>  
-  
-  
-  
-  
-  
-                    <a href="#" class="sumario-link" onclick="goToPage(2)">Unidade 2 – O planeta Terra</a><br>
-					<a href="#" class="sumario-link" onclick="goToPage(3)">Unidade 3 – A água</a><br>
-                    <a href="#" class="sumario-link" onclick="goToPage(4)">Unidade 4 – A crosta terrestre</a><br>
-                    <a href="#" class="sumario-link" onclick="goToPage(5)">Unidade 5 – De olho no céu</a><br>
-                    <a href="#" class="sumario-link" onclick="goToPage(6)">Unidade 6 – Os materiais</a><br>
-                    <a href="#" class="sumario-link" onclick="goToPage(7)">Unidade 7 – Vida, célula e sistema nervoso humano</a><br>
-                    <a href="#" class="sumario-link" onclick="goToPage(8)">Unidade 8 – Os sentidos e os movimentos</a><br>
+                    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(11)">2.1 Introdução — O Planeta Terra</a></div>
+                    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(12)">2.2 A Forma da Terra</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(13)">2.3 Provas de que a Terra é Redonda</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(14)">2.4 Rotação da Terra</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(15)">2.5 Translação da Terra</a></div>
+				    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(16)">2.6 As Camadas Internas da Terra</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(17)">2.7 A Atmosfera Terrestre</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(18)">2.8 A Importância das Camadas Internas</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(19)">2.9 Tipos de Rochas</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(20)">2.10 Fósseis e o Registro do Passado</a></div>	
+					</div></div> 
 					
+					<!-- Sumario unidade 3 -->
+<div class="unidade" id="unidade3">
+    <div class="unidade-header" onclick="toggleUnidade('unidade3')">
+        <span class="expand-icon">▶</span> Unidade 3 – A água
+    </div>
+    <div class="subtopicos" id="subtopicos3"> <!-- codigo pra criar subtopico -->
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(21)">3.1 A Importância da Água</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(22)">3.2 Consumo da Água e Desperdício</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(23)">3.3 Estados Físicos da Água</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(24)">3.4 Mudanças de Estado Físico</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(25)">3.5 Distribuição da Água na Terra</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(26)">3.6 Água nos Seres Vivos</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(27)">3.7 Hidrosfera: Águas Oceânicas, Continentais e Atmosféricas</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(28)">3.8 Aquífero Guarani</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(29)">3.9 Ciclo Hidrológico</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(30)">3.10 Misturas com Água e Solubilidade</a></div>
+    </div>
+</div>
+
 					
+<!-- Sumario unidade 4 -->
+<div class="unidade" id="unidade4">
+  <div class="unidade-header" onclick="toggleUnidade('unidade4')">
+    <span class="expand-icon">▶</span> Unidade 4 – A crosta terrestre
+  </div>
+  <div class="subtopicos" id="subtopicos4">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(31)">4.1 A Crosta Terrestre</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(32)">4.2 Rochas e Minerais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(33)">4.3 Minérios e a Mineração</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(34)">4.4 Tipos de Rochas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(35)">4.5 Fósseis nas Rochas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(36)">4.6 O Solo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(37)">4.7 Formação do Solo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(38)">4.8 Intemperismo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(39)">4.9 Uso do Solo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(40)">4.10 Conservação do Solo</a></div>
+  </div>
+</div>
+
+					
+<!-- Sumario unidade 5 -->
+<div class="unidade" id="unidade5">
+  <div class="unidade-header" onclick="toggleUnidade('unidade5')">
+    <span class="expand-icon">▶</span> Unidade 5 – De olho no céu
+  </div>
+  <div class="subtopicos" id="subtopicos5">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(41)">5.1 Olhando para o céu</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(42)">5.2 O Sol</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(43)">5.3 A Terra e seus movimentos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(44)">5.4 As estações do ano</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(45)">5.5 A Lua</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(46)">5.6 Fases da Lua</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(47)">5.7 Outros astros</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(48)">5.8 Instrumentos de observação</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(49)">5.9 Curiosidades do Universo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(50)">5.10 Vida fora da Terra</a></div>
+  </div>
+</div>
+			
+<!-- Sumario unidade 6 -->
+<div class="unidade" id="unidade6">
+  <div class="unidade-header" onclick="toggleUnidade('unidade6')">
+    <span class="expand-icon">▶</span> Unidade 6 – Os materiais
+  </div>
+  <div class="subtopicos" id="subtopicos6">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(51)">6.1 O que são materiais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(52)">6.2 Propriedades dos materiais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(53)">6.3 Materiais naturais e artificiais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(54)">6.4 Estados físicos da matéria</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(55)">6.5 Mudanças de estado físico</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(56)">6.6 Misturas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(57)">6.7 Separação de misturas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(58)">6.8 Transformações dos materiais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(59)">6.9 Sustentabilidade e reciclagem</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(60)">6.10 Materiais e o meio ambiente</a></div>
+  </div>
+</div>
+				
+<!-- Sumario unidade 7 -->
+<div class="unidade" id="unidade7">
+  <div class="unidade-header" onclick="toggleUnidade('unidade7')">
+    <span class="expand-icon">▶</span> Unidade 7 – Vida, célula e sistema nervoso humano
+  </div>
+  <div class="subtopicos" id="subtopicos7">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(61)">7.1 O que é vida</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(62)">7.2 A célula</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(63)">7.3 Tipos de células</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(64)">7.4 Estrutura da célula</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(65)">7.5 Tecidos e órgãos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(66)">7.6 O sistema nervoso</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(67)">7.7 Cérebro, medula e nervos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(68)">7.8 Estímulos e respostas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(69)">7.9 Os cinco sentidos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(70)">7.10 Cuidados com o sistema nervoso</a></div>
+  </div>
+</div>
+					
+<!-- Sumario unidade 8 -->
+<div class="unidade" id="unidade8">
+  <div class="unidade-header" onclick="toggleUnidade('unidade8')">
+    <span class="expand-icon">▶</span> Unidade 8 – Os sentidos e os movimentos
+  </div>
+  <div class="subtopicos" id="subtopicos8">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(71)">8.1 Os sentidos do corpo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(72)">8.2 A visão</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(73)">8.3 A audição</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(74)">8.4 O tato</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(75)">8.5 O paladar</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(76)">8.6 O olfato</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(77)">8.7 O sistema locomotor</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(78)">8.8 Os músculos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(79)">8.9 As articulações</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(80)">8.10 Cuidando do corpo</a></div>
+  </div>
+</div>
+             
+				<!-- exemplo de link rapido na pagina
+           
+                    <a href="#" class="sumario-link" onclick="goToPage(8)">veja na pagina 8</a><br>
+					
+					-->
                 </div>
             </div>
-			
-			
-			
-			
-			
 			
 			
 			  <!--  Unidade 1 - 1.1 – Um ambiente dinâmico - pagina1 -->
@@ -723,9 +224,7 @@ body {
                     <p>Nesta unidade, vamos compreender como o ambiente está em constante transformação e de que forma os seres vivos se adaptam a essas mudanças para sobreviver e prosperar.</p>
                 </div>
 				
-				
-				
-				
+			
 				 <!--  VIDEO -->
 				
 				
@@ -733,10 +232,10 @@ body {
                 
                 <div class="video-component" 
                      data-video-id="jTOjPHQIlBQ" 
-                     data-question-time="20"
+                     data-question-time="23"
                      data-question="Você já notou alguma mudança no ambiente onde você mora?"
                      data-options='["Sim", "Não", "Nunca reparei"]'
-                     data-feedback="Ótima observação! Todas as respostas são válidas.">
+                     data-feedback="Parabéns, continue assim !">
                     
                     <div class="video-wrapper">
                         <iframe class="youtube-player" 
@@ -760,39 +259,19 @@ body {
                     <div class="video-status">Clique em play para começar</div>
                 </div>
             </div>
-		 
+				
+				 <!--  fim do VIDEO -->
+				
 
-
-				
-				
-				
-				
-				
-				 <!--  VIDEO -->
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				<div class="highlight-box">
                         <h4>Por Que Estudar um Ambiente Dinâmico?</h4>
                         <p>A natureza muda o tempo todo porque tudo está ligado. Se muda uma planta, um bicho ou o clima, tudo muda junto. Por isso, nossas atitudes podem ajudar ou atrapalhar a natureza.</p>
                     </div>
             </div>
         </div>
+		
+		
+		 <!-- ==========Unidade 1 ====== -->
         
         <!-- Unidade 1 – 1.2 As Camadas da Terra- pagina 02 -->
         <div class="page">
@@ -803,8 +282,13 @@ body {
             <div class="page-content">
 			
                 <div class="text-box">
-                    <h3>Nossa casa no universo</h3>
-                    <p>A Terra é formada por quatro partes principais : litosfera (solo e rochas), hidrosfera (águas), atmosfera (ar) e biosfera (onde vivem os seres vivos). Essas partes trabalham juntas para manter a vida e explicar coisas como o ciclo da água, o clima e onde vivem os seres vivos.</p>
+                    <h3>As Camadas da Terra</h3>
+                    <p>A Terra é formada por quatro partes principais : <b>litosfera</b> (solo e rochas), <b>hidrosfera</b> (águas), <b>atmosfera</b> (ar) e <b>biosfera</b> (onde vivem os seres vivos). Essas partes trabalham juntas para manter a vida e explicar coisas como o ciclo da água, o clima e onde vivem os seres vivos.</p>
+                </div>
+		    
+		<div class="barra-lupa"> Clique nos ícones para explorar imagens, aprender mais e ver exemplos.</div>
+		<div style="height: 100vh;">
+                 <iframe src="https://ibmxu.github.io/guia/galeria-com-modal/as_camadas_%20da_terra.html" style="width: 100%; height: 100%; border: none;"></iframe>
                 </div>
 				
             </div>
@@ -894,346 +378,993 @@ body {
                 </div>
             </div>
         </div>
+			
+		        <!-- Unidade1: 1.9 - Impactos Ambientais e Sustentabilidade - pagina9 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Impactos Ambientais e Sustentabilidade</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Impactos Ambientais e Sustentabilidade</h3>
+                    <p>As atividades humanas, como desmatamento, poluição e uso exagerado de recursos, causam impactos no ambiente. A sustentabilidade quer dizer usar os recursos sem acabar com eles, para que a natureza continue viva e possa ajudar as próximas gerações.</p>
+                </div>
+            </div>
+        </div>
+		
+		        <!-- Unidade1: 1.10 - Produtores, Consumidores e Decompositores - pagina10 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Importância da Educação Ambiental</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Educação Ambiental</h3>
+                    <p>A educação ambiental ensina como cuidar do meio ambiente no dia a dia. Pequenas ações, como separar o lixo, economizar água e respeitar os animais, fazem diferença. Aprender isso na escola ajuda todo mundo a proteger a natureza.</p>
+                </div>
+            </div>
+        </div>
+		
+		 <!-- ==========Unidade 2 ====== -->
+		
+		        <!-- Unidade2: 2.1 - Introdução — O Planeta Terra - pagina11 -->
+        <div class="page">
+            <div class="page-header">
+                <h1> Introdução — O Planeta Terra</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>O Planeta Terra</h3>
+                    <p>Vamos estudar como é o nosso planeta por dentro e por fora, como ele se move e o que isso muda no nosso dia a dia. Vamos ver suas camadas, a atmosfera, provas de que é redondo, movimentos, rochas e fósseis.</p>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Unidade2: 2.2 - A Forma da Terra - pagina12 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>A Forma da Terra</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>A Forma da Terra</h3>
+                    <p>A Terra NÃO é plana! Apesar de parecer plana quando olhamos ao redor, na verdade ela é quase uma esfera, levemente achatada nos polos. Eclipses, navios desaparecendo no horizonte e fotos tiradas do espaço provam que vivemos em um planeta redondo, não em um disco.</p>
+                </div>
+            </div>
+        </div>
 		
 		
 		
+		<!-- Unidade2: 2.3 - Provas de que a Terra é Redonda - pagina13 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Provas de que a Terra é Redonda</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Provas de que a Terra é Redonda</h3>
+                    <p>Como vimos, a Terra não é plana, mas quase uma esfera. A sombra da Terra nos eclipses é sempre curva, navios somem “de baixo para cima” no mar, e imagens de satélites mostram nosso planeta como uma grande bola azul flutuando no espaço.</p>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Unidade2: 2.4 - Rotação da Terra - pagina14 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Rotação da Terra</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Rotação da Terra</h3>
+                    <p>A Terra gira em torno de si mesma a cada 24 horas — esse movimento é chamado de rotação e é ele que faz acontecer os dias e as noites.</p>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Unidade2: 2.5 - Translação da Terra - pagina15 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Translação da Terra</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Translação da Terra</h3>
+                    <p>texto</p>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Unidade2: 2.6 - As Camadas Internas da Terra - pagina16 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>As Camadas Internas da Terra</h1>
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>As Camadas Internas da Terra</h3>
+                    <p>texto</p>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Unidade2: 2.7 - A Atmosfera Terrestre - pagina17 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>A Atmosfera Terrestre</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>A Atmosfera Terrestre</h3>
+                    <p>texto</p>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Unidade2: 2.8 - A Importância das Camadas Internas - pagina18 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>A Importância das Camadas Internas</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>A Importância das Camadas Internas</h3>
+                    <p>texto</p>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Unidade2: 2.9 - Tipos de Rochas - pagina19 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Tipos de Rochas</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Tipos de Rochas</h3>
+                    <p>texto</p>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Unidade2: 2.10 - Fósseis e o Registro do Passado - pagina20 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Fósseis e o Registro do Passado</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Fósseis e o Registro do Passado</h3>
+                    <p>texto</p>
+                </div>
+            </div>
+        </div>
+		
+		
+		
+		<!-- ==========Unidade 3 ====== -->
+
+<!-- Unidade 3 – 3.1 A Importância da Água - pagina21 -->
+<div class="page">
+    <div class="page-header">
+        <h1>A Importância da Água</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Recurso essencial à vida</h3>
+            <p>A água é fundamental para todos os seres vivos. Ela está presente nos organismos, nos alimentos e em muitas funções vitais. Mesmo cobrindo grande parte do planeta, apenas uma pequena porção é própria para o consumo humano, o que exige cuidado e uso consciente.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.2 Consumo da Água e Desperdício - pagina22 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Consumo da Água e Desperdício</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Desperdício no dia a dia</h3>
+            <p>Atividades simples como lavar roupa, escovar os dentes ou dar descarga consomem muita água. Além disso, o consumo “invisível” — como na produção de alimentos — também pesa. Por exemplo, são usados cerca de 1.545 litros de água para produzir um único bife de 100 g.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.3 Estados Físicos da Água - pagina23 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Estados Físicos da Água</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Líquido, sólido e gasoso</h3>
+            <p>A água pode existir nos três estados físicos: líquida (rios, lagos), sólida (gelo, neve) e gasosa (vapor de água). Ela muda de estado conforme a temperatura, e está presente em diversas formas ao nosso redor.</p>
+        </div>
+    </div>
+</div>
+
+		
+		<!-- Unidade 3 – 3.4 Mudanças de Estado Físico - pagina24 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Mudanças de Estado Físico</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Como a água se transforma</h3>
+            <p>A água pode mudar de estado dependendo do calor ou do frio. Quando esfria, vira gelo (solidificação). Ao aquecer, vira vapor (vaporização). Também pode voltar ao estado líquido (fusão e condensação). Esses processos fazem parte do ciclo da água.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.5 Distribuição da Água na Terra - pagina25 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Distribuição da Água na Terra</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Muita água, pouca potável</h3>
+            <p>Mais de 70% da superfície da Terra é coberta por água, mas a maior parte é salgada e não pode ser consumida. Apenas uma pequena parte é doce e acessível, vinda de rios, lagos e aquíferos. Por isso, é importante evitar o desperdício.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.6 Água nos Seres Vivos - pagina26 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Água nos Seres Vivos</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Elemento vital no corpo</h3>
+            <p>O corpo humano é composto por cerca de 75% de água. A água ajuda na digestão, no transporte de nutrientes, no controle da temperatura e na eliminação de resíduos. Nos animais e nas plantas, ela também tem funções essenciais à vida.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.7 Hidrosfera: Águas Oceânicas, Continentais e Atmosféricas - pagina27 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Hidrosfera: Tipos de Água</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>O ciclo da água na natureza</h3>
+            <p>A hidrosfera é o conjunto de todas as águas do planeta. Ela inclui: águas oceânicas (mares e oceanos), águas continentais (rios, lagos, aquíferos) e águas atmosféricas (chuvas, nevoeiros e vapor). Todas essas águas estão conectadas pelo ciclo da água.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.8 Aquífero Guarani - pagina28 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Aquífero Guarani</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Reserva subterrânea de água</h3>
+            <p>O aquífero Guarani é uma das maiores reservas subterrâneas de água doce do mundo. Ele se estende por vários países da América do Sul, incluindo o Brasil. A água se infiltra no solo e se acumula entre as rochas, sendo usada para abastecimento em muitas cidades.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.9 Ciclo Hidrológico - pagina29 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Ciclo Hidrológico</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>O caminho da água</h3>
+            <p>O ciclo da água começa com a evaporação (aquecimento da água pela energia solar). O vapor sobe, condensa e forma nuvens. Quando as nuvens se enchem, ocorre a precipitação (chuva). Parte da água infiltra no solo ou volta aos rios, recomeçando o ciclo.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.10 Misturas com Água e Solubilidade - pagina30 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Misturas com Água e Solubilidade</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Homogênea ou heterogênea?</h3>
+            <p>A água pode formar dois tipos de mistura: homogênea (como água e açúcar) e heterogênea (como água e areia). A solubilidade é a capacidade de um material se dissolver na água. Esse tema ajuda a entender como a água transporta substâncias e como separar materiais.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- ==========Unidade 4 ====== -->
+
+<!-- Unidade 4 – 4.1 A Crosta Terrestre - pagina31 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A Crosta Terrestre</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Camada externa do planeta</h3>
+      <p>A crosta terrestre é a camada mais externa da Terra, formada principalmente por rochas e minerais. Ela é onde vivemos e de onde extraímos materiais para construções, máquinas e alimentos. Conhecer a crosta é entender como usamos e impactamos o planeta.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.2 Rochas e Minerais - pagina32 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Rochas e Minerais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>O que forma a crosta?</h3>
+      <p>As rochas são formadas por um ou mais minerais. O granito, por exemplo, é feito de quartzo, feldspato e mica. Já o calcário é formado por um único mineral. Usamos rochas e minerais na construção civil, tecnologia e até na arte.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.3 Minérios e a Mineração - pagina33 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Minérios e a Mineração</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Extraindo da natureza</h3>
+      <p>Minérios são rochas ou minerais com valor econômico. Extraímos eles das jazidas através da mineração. Essa atividade precisa de cuidado, pois pode causar poluição e destruir o ambiente.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.4 Tipos de Rochas - pagina34 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Tipos de Rochas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Ígneas, Sedimentares e Metamórficas</h3>
+      <p>Rochas ígneas se formam do magma. Se esfriam rápido, são vulcânicas (como o basalto); se devagar, são plutônicas (como o granito). Rochas sedimentares vêm de fragmentos de outras rochas (como arenito). Rochas metamórficas são formadas com calor e pressão (como o mármore).</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.5 Fósseis nas Rochas - pagina35 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Fósseis nas Rochas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Vestígios do passado</h3>
+      <p>Fósseis são restos de seres vivos ou marcas deixadas por eles, preservados nas rochas sedimentares. Eles ajudam a contar a história da vida na Terra e entender os ambientes do passado.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.6 O Solo - pagina36 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O Solo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Base da vida terrestre</h3>
+      <p>O solo é a parte da crosta formada por minerais, água, ar e matéria orgânica. Ele é essencial para o crescimento das plantas e para a vida de muitos organismos. Seu cuidado é fundamental para o meio ambiente.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.7 Formação do Solo - pagina37 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Formação do Solo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como o solo se forma</h3>
+      <p>O solo vem da decomposição das rochas, um processo chamado intemperismo. Isso acontece por ação do clima, da água, das raízes e dos microrganismos. Leva milhares de anos para se formar.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.8 Intemperismo - pagina38 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Intemperismo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Transformando as rochas</h3>
+      <p>O intemperismo pode ser físico (quebra por calor, frio e vento), químico (reação com água e ar) ou biológico (ação de raízes e organismos). Ele é essencial para criar o solo e moldar paisagens.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.9 Uso do Solo - pagina39 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Uso do Solo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como usamos o solo</h3>
+      <p>O solo é usado na agricultura, na criação de animais, nas construções e no extrativismo. Cada tipo de uso pode afetar o solo de forma diferente. É importante cuidar para evitar a degradação.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.10 Conservação do Solo - pagina40 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Conservação do Solo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Preservar para o futuro</h3>
+      <p>Evitar o desmatamento, usar técnicas sustentáveis e manter a vegetação ajudam a conservar o solo. Assim garantimos alimento e qualidade de vida para as futuras gerações.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========Unidade 5 ====== -->
+
+<!-- Unidade 5 – 5.1 Olhando para o céu - pagina41 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Olhando para o céu</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>O céu nos ensina muito</h3>
+      <p>Desde os tempos antigos, os seres humanos observam o céu para entender o tempo, se localizar e criar calendários. Observar o céu é também uma forma de aprender sobre o Universo e os corpos celestes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.2 O Sol - pagina42 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O Sol</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Fonte de luz e calor</h3>
+      <p>O Sol é a estrela mais próxima da Terra. Ele ilumina, aquece e possibilita a vida no planeta. Também influencia o clima, o crescimento das plantas e o ritmo da natureza.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.3 A Terra e seus movimentos - pagina43 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A Terra e seus movimentos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Rotação e translação</h3>
+      <p>A Terra gira em torno de si mesma (rotação), o que forma os dias e noites. Ela também gira ao redor do Sol (translação), formando os anos e as estações do ano.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.4 As estações do ano - pagina44 -->
+<div class="page">
+  <div class="page-header">
+    <h1>As estações do ano</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Verão, outono, inverno e primavera</h3>
+      <p>As estações acontecem por causa da inclinação da Terra e sua translação. Cada estação tem características próprias de temperatura, clima e duração do dia.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.5 A Lua - pagina45 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A Lua</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>O satélite da Terra</h3>
+      <p>A Lua é o corpo celeste mais próximo da Terra. Ela reflete a luz do Sol e influencia as marés. Sua posição em relação ao Sol e à Terra muda sua aparência no céu.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.6 Fases da Lua - pagina46 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Fases da Lua</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Nova, crescente, cheia e minguante</h3>
+      <p>As fases da Lua dependem da posição entre Sol, Terra e Lua. Mudam a cada semana e afetam a observação no céu. São importantes para calendários e atividades humanas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.7 Outros astros - pagina47 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Outros astros</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Planetas, estrelas e cometas</h3>
+      <p>Além do Sol e da Lua, vemos no céu planetas, estrelas, cometas e meteoros. Cada um tem características e trajetórias próprias no espaço.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.8 Instrumentos de observação - pagina48 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Instrumentos de observação</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Ver mais longe e melhor</h3>
+      <p>Binóculos, lunetas e telescópios ajudam a observar o céu. Com eles, conseguimos ver detalhes da Lua, planetas distantes e até galáxias.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.9 Curiosidades do Universo - pagina49 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Curiosidades do Universo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Fatos incríveis sobre o espaço</h3>
+      <p>Sabia que existem bilhões de estrelas? E que um dia em Vênus é maior que um ano? O Universo é cheio de curiosidades que nos fazem imaginar e querer aprender mais.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.10 Vida fora da Terra - pagina50 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Vida fora da Terra</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Existe vida em outros planetas?</h3>
+      <p>Os cientistas estudam se há vida em outros planetas. Ainda não há provas, mas há muitos planetas parecidos com a Terra. A busca continua!</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========Unidade 6 ====== -->
+
+<!-- Unidade 6 – 6.1 O que são materiais - pagina51 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O que são materiais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Tudo ao nosso redor</h3>
+      <p>Materiais são tudo aquilo que usamos para fabricar objetos. Podem ser naturais, como madeira e algodão, ou artificiais, como plástico e vidro. Eles estão presentes em nosso dia a dia.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.2 Propriedades dos materiais - pagina52 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Propriedades dos materiais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como os materiais se comportam</h3>
+      <p>Cada material tem características próprias, como dureza, elasticidade, transparência, cor e textura. Essas propriedades definem como ele será usado na fabricação de objetos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.3 Materiais naturais e artificiais - pagina53 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Materiais naturais e artificiais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>De onde vêm os materiais?</h3>
+      <p>Materiais naturais vêm da natureza, como madeira, algodão e pedra. Já os artificiais são produzidos pelas pessoas, como plástico, vidro e tecidos sintéticos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.4 Estados físicos da matéria - pagina54 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Estados físicos da matéria</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Sólido, líquido e gasoso</h3>
+      <p>Os materiais podem estar em três estados físicos: sólido (com forma própria), líquido (se adapta ao recipiente) e gasoso (sem forma nem volume fixo).</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.5 Mudanças de estado físico - pagina55 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Mudanças de estado físico</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Transformações da matéria</h3>
+      <p>Os materiais mudam de estado físico com a temperatura: derretem, evaporam, condensam ou congelam. Essas mudanças fazem parte do nosso cotidiano.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.6 Misturas - pagina56 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Misturas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Quando materiais se juntam</h3>
+      <p>Misturas acontecem quando combinamos dois ou mais materiais. Elas podem ser homogêneas (como água com sal) ou heterogêneas (como água e óleo).</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.7 Separação de misturas - pagina57 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Separação de misturas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como separar os materiais</h3>
+      <p>Existem técnicas para separar misturas, como filtração, decantação e peneiração. Elas são usadas no dia a dia e na indústria para recuperar os materiais.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.8 Transformações dos materiais - pagina58 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Transformações dos materiais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Físicas e químicas</h3>
+      <p>Os materiais podem passar por transformações físicas (sem mudar a substância) ou químicas (formando novas substâncias), como quando a madeira queima e vira cinza.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.9 Sustentabilidade e reciclagem - pagina59 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Sustentabilidade e reciclagem</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Reutilizar e preservar</h3>
+      <p>Reciclar é transformar materiais usados em novos produtos. Separar o lixo e reaproveitar materiais ajuda o meio ambiente e evita o desperdício.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.10 Materiais e o meio ambiente - pagina60 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Materiais e o meio ambiente</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Impactos e cuidados</h3>
+      <p>Alguns materiais demoram muito para se decompor. Precisamos escolher bem o que usamos e evitar poluição. Assim, protegemos a natureza e a saúde das pessoas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==========Unidade 7 ====== -->
+
+<!-- Unidade 7 – 7.1 O que é vida - pagina61 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O que é vida</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Características dos seres vivos</h3>
+      <p>Seres vivos nascem, crescem, se reproduzem e morrem. Eles reagem ao ambiente, se alimentam e têm células. Tudo isso faz parte do que chamamos de vida.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.2 A célula - pagina62 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A célula</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Unidade básica da vida</h3>
+      <p>As células são as menores partes dos seres vivos. Existem seres formados por uma só célula (unicelulares) e outros por muitas (multicelulares), como os seres humanos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.3 Tipos de células - pagina63 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Tipos de células</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Procariontes e eucariontes</h3>
+      <p>Células procariontes são simples e sem núcleo definido, como as bactérias. Células eucariontes têm núcleo e são mais organizadas, como as das plantas e animais.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.4 Estrutura da célula - pagina64 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Estrutura da célula</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Partes principais</h3>
+      <p>As células possuem membrana plasmática, citoplasma e núcleo. Cada parte tem uma função importante para o funcionamento do organismo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.5 Tecidos e órgãos - pagina65 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Tecidos e órgãos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Organização do corpo</h3>
+      <p>Células iguais formam tecidos. Tecidos formam órgãos, como o coração e os pulmões. Juntos, eles fazem o corpo funcionar.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.6 O sistema nervoso - pagina66 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O sistema nervoso</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Coordenação do corpo</h3>
+      <p>O sistema nervoso comanda o corpo. Ele é formado pelo cérebro, medula espinhal e nervos. Recebe informações e envia comandos para nossas ações.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.7 Cérebro, medula e nervos - pagina67 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Cérebro, medula e nervos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Partes do sistema nervoso</h3>
+      <p>O cérebro é o centro do pensamento. A medula transmite os sinais. Os nervos conectam tudo. Juntos, eles controlam nosso corpo e reações.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.8 Estímulos e respostas - pagina68 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Estímulos e respostas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como o corpo reage</h3>
+      <p>O corpo sente estímulos como luz, som ou dor e responde a eles. Isso acontece graças ao sistema nervoso, que interpreta e age rapidamente.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.9 Os cinco sentidos - pagina69 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Os cinco sentidos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Visão, audição, olfato, tato e paladar</h3>
+      <p>São os sentidos que usamos para perceber o mundo. Eles mandam sinais ao cérebro, que interpreta tudo o que vemos, ouvimos, sentimos e saboreamos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.10 Cuidados com o sistema nervoso - pagina70 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Cuidados com o sistema nervoso</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Saúde do corpo e da mente</h3>
+      <p>Boa alimentação, sono adequado e evitar o uso de drogas ajudam a manter o sistema nervoso saudável. Atividades como leitura e jogos também fazem bem para o cérebro.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========Unidade 8 ====== -->
+
+<!-- Unidade 8 – 8.1 Os sentidos do corpo - pagina71 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Os sentidos do corpo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como percebemos o mundo</h3>
+      <p>Nosso corpo tem cinco sentidos: visão, audição, tato, paladar e olfato. Eles nos ajudam a sentir o ambiente e reagir ao que acontece ao nosso redor.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.2 A visão - pagina72 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A visão</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Ver o que está ao redor</h3>
+      <p>O sentido da visão permite enxergar formas, cores e movimentos. Os olhos captam a luz e o cérebro interpreta as imagens.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.3 A audição - pagina73 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A audição</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Ouvir sons e ruídos</h3>
+      <p>O ouvido capta os sons e envia sinais ao cérebro. A audição nos ajuda a nos comunicar, ouvir músicas e perceber perigos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.4 O tato - pagina74 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O tato</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Sentir com a pele</h3>
+      <p>O tato está na pele e permite sentir pressão, temperatura, dor e textura. É essencial para proteção e para interagir com objetos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.5 O paladar - pagina75 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O paladar</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Sentir os sabores</h3>
+      <p>A língua tem papilas gustativas que detectam sabores como doce, salgado, azedo, amargo e umami. O paladar está ligado ao olfato.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.6 O olfato - pagina76 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O olfato</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Sentir os cheiros</h3>
+      <p>O nariz capta partículas do ar com cheiros. O olfato ajuda a identificar alimentos, perigos e até lembrar de situações passadas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.7 O sistema locomotor - pagina77 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O sistema locomotor</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Movimento do corpo</h3>
+      <p>O sistema locomotor é formado por ossos, músculos e articulações. Ele permite que o corpo se mova, ande, pule e corra.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.8 Os músculos - pagina78 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Os músculos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Força e movimento</h3>
+      <p>Os músculos se contraem e relaxam para mover os ossos. Eles trabalham em pares e são essenciais para qualquer ação do corpo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.9 As articulações - pagina79 -->
+<div class="page">
+  <div class="page-header">
+    <h1>As articulações</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Conexões móveis</h3>
+      <p>As articulações ligam os ossos e permitem os movimentos. Joelhos, cotovelos e ombros são exemplos importantes no corpo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.10 Cuidando do corpo - pagina80 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Cuidando do corpo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Saúde e prevenção</h3>
+      <p>Para manter os sentidos e os movimentos saudáveis, é importante dormir bem, praticar exercícios, comer de forma equilibrada e evitar acidentes.</p>
+    </div>
+  </div>
+</div>
+
 		
     </div>
-		
-			
-			
-			
-			
-			
-      
-
-      
-        
-  <!-- Script das particulas no topo da pagina -->
-    <script>
-  let particles = [];
-  let state = 0;
-  let stateTimer = 0;
-
-  function setup() {
-    let canvas = createCanvas( 800, 100); // Horizontal
-    canvas.parent('animacao-biologica');
-    for (let i = 0; i < 120; i++) {
-      particles.push(new Particle());
-    }
-  }
-
-  function draw() {
-    clear(); // Fundo branco
-    stateTimer++;
-    if (stateTimer > 480) {
-      state = (state + 1) % 5;
-      stateTimer = 0;
-    }
-
-    for (let p of particles) {
-      p.update(state);
-      p.interactWithMouse();
-      p.show();
-    }
-  }
-
-  class Particle {
-    constructor() {
-      this.reset();
-    }
-
-    reset() {
-      this.pos = createVector(random(width), random(height));
-      this.vel = p5.Vector.random2D().mult(random(0.5, 2));
-      this.target = this.pos.copy();
-      this.color = color(50, 150, 255); // Azul biológico
-      this.size = 5;
-    }
-
-    interactWithMouse() {
-      let d = dist(this.pos.x, this.pos.y, mouseX, mouseY);
-      if (d < 80) {
-        let flee = p5.Vector.sub(this.pos, createVector(mouseX, mouseY));
-        flee.setMag(2);
-        this.pos.add(flee);
-      }
-    }
-
-    update(state) {
-      switch(state) {
-        case 0:
-          this.pos.add(this.vel);
-          this.edges();
-          break;
-
-        case 1:
-          this.target = createVector(width/2 + cos(this.angleIndex())*150, height/2 + sin(this.angleIndex())*60);
-          this.pos.lerp(this.target, 0.05);
-          break;
-
-        case 2:
-          let a = this.angleIndex();
-          this.target = createVector(width/2 + sin(a*5)*70, height/2 + (a-PI)*50);
-          this.pos.lerp(this.target, 0.05);
-          break;
-
-        case 3:
-          let r = 90 * noise(this.angleIndex());
-          this.target = createVector(width/2 + cos(this.angleIndex())*r, height/2 + sin(this.angleIndex())*r);
-          this.pos.lerp(this.target, 0.05);
-          break;
-
-        case 4:
-          this.vel = p5.Vector.random2D().mult(random(0.5, 2));
-          this.pos.add(this.vel);
-          break;
-      }
-    }
-
-    angleIndex() {
-      return map(particles.indexOf(this), 0, particles.length, 0, TWO_PI);
-    }
-
-    edges() {
-      if (this.pos.x < 0 || this.pos.x > width) this.vel.x *= -1;
-      if (this.pos.y < 0 || this.pos.y > height) this.vel.y *= -1;
-    }
-
-   show() {
-    // Sombra suave
-    fill(0, 0, 0, 50);
-    noStroke();
-    ellipse(this.pos.x + 1, this.pos.y + 1, this.size);
-    
-    // Partícula com contorno
-    stroke(0, 0, 0, 150); // Contorno preto semi-transparente
-    strokeWeight(0.5);
-    fill(255, 255, 255, 220); // Branco quase opaco
-    ellipse(this.pos.x, this.pos.y, this.size);
-}
-  }
-</script>
-
  <div class="navigation">
     <button class="nav-btn" id="prevBtn" onclick="changePage(-1)">← Anterior</button>
     <button class="home-btn" onclick="goToHome()" title="Ir para o início"></button>
     <button class="nav-btn" id="nextBtn" onclick="changePage(1)">Próxima →</button>
 </div>
 	
-<!-- Script da movimentação de paginas automatico com localStorage -->
- <script>
-        let currentPage = 0;
-        let totalPages = 0;
-
-        // Função para inicializar o sistema
-        function initializePages() {
-            const pages = document.querySelectorAll('.page');
-            totalPages = pages.length;
-            
-            console.log(`Total de páginas encontradas: ${totalPages}`);
-            
-            // Carregar última página visitada
-            loadLastPage();
-            
-            updateNavigation();
-            updateProgressBar();
-        }
-
-        // Função para carregar última página
-        function loadLastPage() {
-            const savedPage = localStorage.getItem('guiaCiencias_ultimaPagina');
-            if (savedPage !== null) {
-                const pageNumber = parseInt(savedPage);
-                if (pageNumber >= 0 && pageNumber < totalPages) {
-                    const pages = document.querySelectorAll('.page');
-                    pages[currentPage].classList.remove('active');
-                    currentPage = pageNumber;
-                    pages[currentPage].classList.add('active');
-                }
-            }
-        }
-
-        // Função para salvar página atual
-        function saveCurrentPage() {
-            localStorage.setItem('guiaCiencias_ultimaPagina', currentPage.toString());
-        }
-		
-		// Função para ir diretamente para uma página específica
-function goToPage(pageNumber) {
-  const pages = document.querySelectorAll('.page');
-
-  // Remove 'active' da página atual
-  pages[currentPage].classList.remove('active');
-
-  // Define a nova página atual
-  currentPage = pageNumber;
-
-  // Adiciona 'active' à nova página
-  pages[currentPage].classList.add('active');
-
-  // Salva no localStorage
-  saveCurrentPage();
-
-  // Atualiza navegação e barra de progresso
-  updateNavigation();
-  updateProgressBar();
-}
-
-        // Navegação entre páginas
-        function changePage(direction) {
-            const pages = document.querySelectorAll('.page');
-            pages[currentPage].classList.remove('active');
-            
-            currentPage += direction;
-            
-            if (currentPage < 0) currentPage = totalPages - 1;
-            if (currentPage >= totalPages) currentPage = 0;
-            
-            pages[currentPage].classList.add('active');
-            
-            // Salva no localStorage
-            saveCurrentPage();
-            
-            updateNavigation();
-            updateProgressBar();
-        }
-
-        function updateNavigation() {
-            document.getElementById('pageIndicator').textContent = `${currentPage + 1} / ${totalPages}`;
-            
-            document.getElementById('prevBtn').disabled = currentPage === 0;
-            document.getElementById('nextBtn').disabled = currentPage === totalPages - 1;
-        }
-
-        function updateProgressBar() {
-            const progress = ((currentPage + 1) / totalPages) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-        }
-
-        // Navegação por teclado
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft' && currentPage > 0) {
-                changePage(-1);
-            }
-            if (e.key === 'ArrowRight' && currentPage < totalPages - 1) {
-                changePage(1);
-            }
-        });
-
-        // Navegação por swipe em dispositivos móveis
-        let startX = 0;
-        let startY = 0;
-
-        document.addEventListener('touchstart', function(e) {
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-        });
-
-        document.addEventListener('touchend', function(e) {
-            if (!startX || !startY) return;
-
-            const endX = e.changedTouches[0].clientX;
-            const endY = e.changedTouches[0].clientY;
-
-            const diffX = startX - endX;
-            const diffY = startY - endY;
-
-            // Verifica se o movimento foi mais horizontal que vertical
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > 50) { // Mínimo de 50px de movimento
-                    if (diffX > 0 && currentPage < totalPages - 1) {
-                        // Swipe para esquerda - próxima página
-                        changePage(1);
-                    } else if (diffX < 0 && currentPage > 0) {
-                        // Swipe para direita - página anterior
-                        changePage(-1);
-                    }
-                }
-            }
-
-            startX = 0;
-            startY = 0;
-        });
-
-        // Inicialização quando a página carregar
-        document.addEventListener('DOMContentLoaded', function() {
-            initializePages();
-        });
-        
-        // Fallback para garantir que inicialize
-        window.addEventListener('load', function() {
-            if (totalPages === 0) {
-                initializePages();
-            }
-        });
-        
-        console.log('E-book responsivo carregado! Use as setas do teclado, botões ou gestos de swipe para navegar.');
-    </script>
 	
-<!-- Script do botão Home com localStorage -->
-<script> 
-function goToHome() {
-  const pages = document.querySelectorAll('.page');
-  pages[currentPage].classList.remove('active');
-  currentPage = 0;
-  pages[currentPage].classList.add('active');
-
-  // Salva no localStorage
-  localStorage.setItem('guiaCiencias_ultimaPagina', currentPage.toString());
-
-  updateNavigation();
-  updateProgressBar();
-}
-
-
-</script>
-			
-
-<script>
-
-
-// === Funções do sumário expansível ===
-function toggleUnidade(unidadeId) {
-    const unidade = document.getElementById(unidadeId);
-    const subtopicos = document.getElementById('subtopicos' + unidadeId.slice(-1));
-    
-    if (unidade.classList.contains('expanded')) {
-        unidade.classList.remove('expanded');
-        subtopicos.classList.remove('expanded');
-    } else {
-        document.querySelectorAll('.unidade').forEach(u => {
-            if (u !== unidade) {
-                u.classList.remove('expanded');
-            }
-        });
-        document.querySelectorAll('.subtopicos').forEach(s => {
-            if (s !== subtopicos) {
-                s.classList.remove('expanded');
-            }
-        });
-        
-        unidade.classList.add('expanded');
-        subtopicos.classList.add('expanded');
-    }
-}
-
-// === Animação inicial ===
-document.addEventListener('DOMContentLoaded', function() {
-    const container = document.querySelector('.container');
-    if (container) {
-        container.style.opacity = '0';
-        container.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-            container.style.transition = 'all 0.6s ease';
-            container.style.opacity = '1';
-            container.style.transform = 'translateY(0)';
-        }, 100);
-    }
-});
-
-</script>
+<!-- Scripts-->
+ 
+<script src="https://ibmxu.github.io/guia/animacaoTopo.js"></script>
+<script src="https://ibmxu.github.io/guia/animacaoInicial.js"></script>
+<script src="https://ibmxu.github.io/guia/sumario.js"></script>
+<script src="https://ibmxu.github.io/guia/navegacao.js"></script>
 <script src="https://ibmxu.github.io/guia/scriptvideo.js"></script>
+
 </body>
 </html>
