@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+
+<!-- Primeira galeria com modal -->
+
+
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camadas da Terra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #FFFFFF;
+            min-height: 100vh;
+            padding: 10px 5px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 25px;
+            justify-items: center;
+            align-items: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .image-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .image-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #6f42c1;
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .image-item:hover .image-container {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(111, 66, 193, 0.5);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .zoom-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(111, 66, 193, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50%;
+        }
+
+        .image-item:hover .zoom-overlay {
+            opacity: 1;
+        }
+
+        .zoom-icon {
+            color: white;
+            font-size: 32px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .image-item:hover .zoom-icon {
+            transform: scale(1.2);
+        }
+
+        .image-title {
+            color: #333;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+           background: rgba(80,172,76,0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 10px 20px;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 95vw;
+            max-height: 95vh;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.8);
+            animation: modalSlide 0.4s ease;
+            margin-top: 10px;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #6f42c1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 1.6em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            display: flex;
+            height: 600px;
+            max-height: 70vh;
+        }
+
+        .modal-image-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            overflow: hidden;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-info {
+            width: 400px;
+            padding: 0;
+            background: white;
+            border-left: 1px solid #e9ecef;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-info-content {
+            padding: 30px;
+            flex: 1;
+            padding-bottom: 30px;
+        }
+
+        .info-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #6f42c1;
+        }
+
+        .info-description {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1em;
+        }
+
+        .info-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #6f42c1;
+            margin-bottom: 20px;
+        }
+
+        .info-details h4 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .info-details p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .info-examples {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+        }
+
+        .info-examples h4 {
+            color: #1e7e34;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .info-examples ul {
+            color: #2d5a2d;
+            font-size: 0.9em;
+            line-height: 1.5;
+            padding-left: 20px;
+        }
+
+        .info-examples li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlide {
+            from { 
+                opacity: 0;
+                transform: scale(0.8) translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 8px 5px;
+            }
+
+            .container {
+                padding: 0 12px;
+            }
+
+            .gallery {
+                gap: 20px;
+            }
+
+            .image-container {
+                width: 130px;
+                height: 130px;
+                margin-bottom: 12px;
+            }
+
+            .zoom-icon {
+                font-size: 28px;
+            }
+
+            .image-title {
+                font-size: 1.1em;
+            }
+
+            .modal.active {
+                padding: 5px 10px;
+            }
+
+            .modal-content {
+                margin-top: 5px;
+            }
+
+            .modal-body {
+                flex-direction: column;
+                height: auto;
+                max-height: 75vh;
+            }
+
+            .modal-image-section {
+                height: 250px;
+                flex: none;
+            }
+
+            .modal-info {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid #e9ecef;
+                flex: 1;
+                min-height: 200px;
+            }
+
+            .modal-info-content {
+                padding: 25px 20px;
+            }
+
+            .info-details, .info-examples {
+                padding: 18px;
+                margin-left: -2px;
+                margin-right: -2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px 5px;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+
+            .gallery {
+                gap: 18px;
+            }
+            
+            .image-container {
+                width: 110px;
+                height: 110px;
+                border: 4px solid #6b6fd4;
+                margin-bottom: 10px;
+            }
+
+            .image-title {
+                font-size: 1em;
+            }
+
+            .zoom-icon {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="gallery" id="gallery">
+            <!-- As imagens serão inseridas aqui pelo JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Camada da Terra</h2>
+                <button class="close-btn" onclick="closeModal()" title="Fechar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image-section">
+                    <img id="modalImage" class="modal-image" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <div class="modal-info-content">
+                        <div class="info-title" id="infoTitle">Camada</div>
+                        <div class="info-description" id="infoDescription">Descrição da camada.</div>
+                        <div class="info-details">
+                            <h4>Características</h4>
+                            <p id="infoDetails">Características específicas.</p>
+                        </div>
+                        <div class="info-examples">
+                            <h4>Exemplos</h4>
+                            <ul id="infoExamples">
+                                <li>Exemplo 1</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados das camadas da Terra
+        const camadas = [
+            {
+                thumbnail: "https://plus.unsplash.com/premium_photo-1678548904724-8a7d6ef79eb7?w=300&h=300&fit=crop",
+                fullImage: "https://plus.unsplash.com/premium_photo-1678548904724-8a7d6ef79eb7?w=900&h=600&fit=crop",
+                title: "Litosfera",
+                description: "A litosfera é a camada sólida e rígida da Terra, formada pelo solo, rochas e minerais. É onde pisamos e onde encontramos montanhas, vales e todos os tipos de terreno.",
+                details: "Composta pela crosta terrestre e pela parte superior do manto, a litosfera tem espessura que varia de 5 a 100 km. É dividida em placas tectônicas que se movem lentamente, causando terremotos e formando montanhas. Contém todos os minerais e recursos naturais que utilizamos.",
+                examples: [
+                    "Rochas como granito, basalto e calcário",
+                    "Solo onde plantamos alimentos",
+                    "Montanhas como os Andes e Himalaia",
+                    "Minerais como ferro, ouro e cobre",
+                    "Vulcões e suas lavas solidificadas"
+                ]
+            },
+            {
+                thumbnail: "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=200&h=200&fit=crop",
+                fullImage: "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1200&h=800&fit=crop",
+                title: "Hidrosfera",
+                description: "A hidrosfera engloba toda a água presente na Terra: oceanos, rios, lagos, geleiras e até mesmo o vapor d'água na atmosfera. É essencial para toda forma de vida.",
+                details: "Representa cerca de 71% da superfície terrestre. Inclui água doce (apenas 3%) e água salgada (97%). A hidrosfera está em constante movimento através do ciclo da água: evaporação, condensação, precipitação e infiltração. Regula o clima e permite a existência de vida.",
+                examples: [
+                    "Oceanos Atlântico, Pacífico e Índico",
+                    "Rios como Amazonas, Nilo e Mississippi",
+                    "Lagos como Superior, Baikal e Titicaca",
+                    "Geleiras da Antártida e Groenlândia",
+                    "Água subterrânea e aquíferos"
+                ]
+            },
+            {
+                thumbnail: "https://images.unsplash.com/photo-1536061125439-5ef97c6f95aa?w=200&h=200&fit=crop",
+                fullImage: "https://images.unsplash.com/photo-1536061125439-5ef97c6f95aa?w=1200&h=800&fit=crop",
+                title: "Atmosfera",
+                description: "A atmosfera é a camada gasosa que envolve a Terra, composta principalmente por nitrogênio e oxigênio. Nos protege dos raios solares e meteoros, além de manter a temperatura adequada.",
+                details: "Dividida em cinco camadas: troposfera (onde vivemos), estratosfera (com a camada de ozônio), mesosfera, termosfera e exosfera. Contém 78% de nitrogênio, 21% de oxigênio e 1% de outros gases. É responsável pelo clima, tempo e pressão atmosférica.",
+                examples: [
+                    "Oxigênio que respiramos",
+                    "Nuvens e chuvas na troposfera",
+                    "Camada de ozônio na estratosfera",
+                    "Ventos e tempestades",
+                    "Aurora boreal na termosfera"
+                ]
+            },
+            {
+                thumbnail: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=200&fit=crop",
+                fullImage: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&h=800&fit=crop",
+                title: "Biosfera",
+                description: "A biosfera é onde existe vida na Terra, incluindo todos os seres vivos: plantas, animais, fungos e microorganismos. É a interação entre todas as outras esferas que torna a vida possível.",
+                details: "Estende-se desde alguns quilômetros abaixo da superfície terrestre até cerca de 10 km na atmosfera. É o resultado da interação entre litosfera, hidrosfera e atmosfera. Inclui todos os ecossistemas: florestas, oceanos, desertos, polos e áreas urbanas.",
+                examples: [
+                    "Florestas tropicais como a Amazônia",
+                    "Animais desde bactérias até baleias",
+                    "Plantas que produzem oxigênio",
+                    "Ecossistemas marinhos com corais",
+                    "Seres humanos e suas cidades"
+                ]
+            }
+        ];
+
+        // Gerar galeria
+        function generateGallery() {
+            const gallery = document.getElementById('gallery');
+            
+            camadas.forEach((camada, index) => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                imageItem.onclick = () => openModal(camada);
+                
+                imageItem.innerHTML = `
+                    <div class="image-container">
+                        <img src="${camada.thumbnail}" alt="${camada.title}" loading="lazy">
+                        <div class="zoom-overlay">
+                            <div class="zoom-icon">🔍</div>
+                        </div>
+                    </div>
+                    <div class="image-title">${camada.title}</div>
+                `;
+                
+                gallery.appendChild(imageItem);
+            });
+        }
+
+        // Abrir modal
+        function openModal(camada) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalImage = document.getElementById('modalImage');
+            const infoTitle = document.getElementById('infoTitle');
+            const infoDescription = document.getElementById('infoDescription');
+            const infoDetails = document.getElementById('infoDetails');
+            const infoExamples = document.getElementById('infoExamples');
+            
+            modalTitle.textContent = camada.title;
+            modalImage.src = camada.fullImage;
+            modalImage.alt = camada.title;
+            infoTitle.textContent = camada.title;
+            infoDescription.textContent = camada.description;
+            infoDetails.textContent = camada.details;
+            
+            // Preencher exemplos
+            infoExamples.innerHTML = '';
+            camada.examples.forEach(example => {
+                const li = document.createElement('li');
+                li.textContent = example;
+                infoExamples.appendChild(li);
+            });
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fechar modal
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fechar modal ao clicar no fundo
+        document.getElementById('modal').onclick = function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        }
+
+        // Fechar modal com tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Inicializar galeria
+        generateGallery();
+    </script>
+</body>
+</html>
