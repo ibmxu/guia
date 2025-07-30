@@ -54,7 +54,49 @@
 }
 
 /* ================================================
-   CONTÊINERES DE IMAGEM
+   CAIXA LUPA
+   ================================================ */
+
+.barra-lupa {
+  display: inline-flex;
+  align-items: center;
+  background: #e1bee7;
+  border-left: 5px solid #9c27b0;
+  padding: 14px 20px 14px 64px; /* aumentei o padding à esquerda */
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(156, 39, 176, 0.2);
+  color: #4a148c;
+  font-size: 1rem;
+  font-weight: 600;
+  max-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.barra-lupa::before {
+  content: "🔍";
+  position: absolute;
+  left: 20px; /* distância da borda esquerda */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  animation: pulsa-lupa 3s infinite;
+  color: #7b1fa2;
+}
+
+.barra-lupa:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes pulsa-lupa {
+  0%, 100% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-50%) scale(1.1); }
+}
+
+
+/* ================================================
+   CONTÊINERES DE IMAGEM 
    ================================================ */
 
 .image-container {
