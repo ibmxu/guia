@@ -17,8 +17,8 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #87CEEB, #4682B4);
+           font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             background-attachment: fixed;
             padding: 10px;
             margin: 0;
@@ -113,19 +113,20 @@
             gap: 10px;
         }
 
-        .card {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
+               .card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+            color: #2c3e50;
             padding: 15px;
             border-radius: 10px;
             cursor: grab;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1em;
+            text-align: left;
+            font-weight: 500;
+            font-size: 1em;
+            line-height: 1.6;
             transition: transform 0.2s;
-            border: 2px solid transparent;
+            border: 2px solid #ced4da;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-
         .card:hover {
             transform: scale(1.05);
             border-color: yellow;
@@ -255,6 +256,8 @@
                 margin: 10px auto 0 auto;
             }
         }
+
+
 
         /* Responsivo mobile */
         @media (max-width: 768px) {
@@ -478,24 +481,24 @@
 
             <div class="cards">
                 <div class="card" draggable="true" data-camada="1">
-                    1️⃣ <br>
-                    <small>Onde vivemos e chove: camada de ar em contato direto com a superfície terrestre, com mais gases e onde ocorrem a maioria dos fenômenos atmosféricos, como chuvas, ventos e relâmpagos.</small>
+                  
+                    <p>Camada mais próxima da Terra onde vivemos e respiramos. É aqui que acontecem todos os fenômenos meteorológicos como chuvas, ventos, tempestades e relâmpagos.</p>
                 </div>
                 <div class="card" draggable="true" data-camada="2">
-                    2️⃣ <br>
-                    <small>Camada com gás ozônio que absorve parte dos raios ultravioleta do Sol, protegendo contra câncer de pele, problemas oculares e danos ao sistema imunológico; nela, o ar é rarefeito.</small>
+         
+                    <p>Camada com gás ozônio que absorve parte dos raios ultravioleta do Sol, protegendo contra câncer de pele, problemas oculares e danos ao sistema imunológico dos seres vivos; </p>
                 </div>
                 <div class="card" draggable="true" data-camada="3">
-                    3️⃣ <br>
-                    <small>Camada mais fria da atmosfera, com temperaturas de até −100 °C e ar rarefeito, onde ocorre a chuva de meteoros — popularmente chamada de estrelas cadentes.</small>
+                  
+                    <p>A camada mais fria de toda a atmosfera, com temperaturas que podem chegar a -100°C. É aqui que os meteoros vindos do espaço se desintegram, criando o belo espetáculo das "estrelas cadentes"</p>
                 </div>
                 <div class="card" draggable="true" data-camada="4">
-                    4️⃣ <br>
-                    <small>Camada mais quente da atmosfera, rica em íons (ionosfera) e com temperaturas elevadas. Nela ocorrem as auroras: boreal (no Hemisfério Norte) e austral (no Hemisfério Sul), que são luzes coloridas que iluminam o céu perto dos polos.</small>
+               
+                    <p>Camada com as temperaturas mais altas da atmosfera, rica em partículas carregadas chamadas íons. É onde acontecem as magníficas auroras boreais e austrais - aquelas luzes coloridas que dançam no céu próximo aos polos da Terra.</p>
                 </div>
                 <div class="card" draggable="true" data-camada="5">
-                    5️⃣ <br>
-                    <small>É o limite entre a atmosfera e o espaço interplanetário, com ar extremamente rarefeito, formado principalmente por hidrogênio e hélio. A temperatura é muito alta durante o dia e muito baixa à noite. Nessa camada orbitam os satélites artificiais.</small>
+                  
+                    <p>A fronteira final entre nossa atmosfera e o espaço sideral. Formada principalmente pelos gases hidrogênio e hélio, tem temperatura extremamente variável. É aqui que orbitam os satélites artificiais que usamos para comunicação e GPS.</p>
                 </div>
             </div>
         </div>
