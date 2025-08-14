@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camadas da Atmosfera</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: auto;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #87CEEB, #4682B4);
+            background-attachment: fixed;
+            padding: 10px;
+            margin: 0;
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .instructions {
+            text-align: center;
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #1976d2;
+        }
+
+        .game-area {
+            display: flex;
+            gap: 20px;
+        }
+
+        .atmosphere {
+            flex: 1;
+            height: 400px;
+            position: relative;
+            border: 3px solid #2c3e50;
+            border-radius: 10px;
+            background: linear-gradient(to top,
+                #8B4513 0%,     /* Terra - marrom */
+                #87CEEB 20%,    /* Troposfera - azul claro */
+                #4169E1 40%,    /* Estratosfera - azul médio */
+                #191970 60%,    /* Mesosfera - azul escuro */
+                #8A2BE2 80%,    /* Termosfera - roxo */
+                #000000 100%    /* Exosfera - preto */
+            );
+            min-height: 300px;
+        }
+
+        .drop-zone {
+            position: absolute;
+            width: 100%;
+            height: 20%;
+            border: 2px dashed transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.highlight {
+            border-color: yellow;
+            background: rgba(255,255,0,0.3);
+        }
+
+        .drop-zone.correct {
+            border-color: lime;
+            background: rgba(0,255,0,0.2);
+        }
+
+        #zona5 { top: 0%; }    /* Exosfera */
+        #zona4 { top: 20%; }   /* Termosfera */
+        #zona3 { top: 40%; }   /* Mesosfera */
+        #zona2 { top: 60%; }   /* Estratosfera */
+        #zona1 { top: 80%; }   /* Troposfera */
+
+        .cards {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: grab;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: transform 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            border-color: yellow;
+        }
+
+        .card.dragging {
+            opacity: 0.7;
+            transform: rotate(5deg);
+        }
+
+        .score {
+            text-align: center;
+            font-size: 1.3em;
+            margin: 20px 0;
+            padding: 10px;
+            background: #e8f5e8;
+            border-radius: 10px;
+            color: #2e7d32;
+        }
+
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+        }
+
+        button:hover {
+            background: #ff5252;
+        }
+
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #4CAF50;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            display: none;
+            z-index: 1000;
+            max-width: 90%;
+            margin: 0 5%;
+        }
+
+        .message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .message h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        /* Desktop - otimizado para iframe */
+        @media (min-width: 769px) {
+            .game-container {
+                height: calc(100vh - 20px);
+                padding: 12px;
+            }
+            
+            h1 {
+                font-size: 1.4em;
+                margin-bottom: 10px;
+            }
+            
+            .instructions {
+                font-size: 0.9em;
+                padding: 6px;
+                margin-bottom: 10px;
+            }
+            
+            .score {
+                font-size: 1em;
+                margin-bottom: 10px;
+                padding: 6px;
+            }
+            
+            .game-area {
+                gap: 15px;
+                flex: 1;
+                min-height: 0;
+            }
+            
+            .cards {
+                gap: 6px;
+                max-height: none;
+            }
+            
+            .card {
+                padding: 8px;
+                font-size: 0.85em;
+            }
+            
+            .atmosphere {
+                min-height: 250px;
+            }
+            
+            .drop-zone {
+                font-size: 0.8em;
+                padding: 4px;
+            }
+            
+            button {
+                padding: 8px 16px;
+                font-size: 0.9em;
+                margin: 10px auto 0 auto;
+            }
+        }
+
+        /* Responsivo mobile */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .game-container {
+                padding: 10px;
+                margin-bottom: 30px;
+                height: auto;
+                min-height: auto;
+            }
+            
+            h1 {
+                font-size: 1.3em;
+                margin-bottom: 8px;
+            }
+            
+            .instructions {
+                font-size: 0.85em;
+                padding: 6px;
+                margin-bottom: 10px;
+            }
+            
+            .score {
+                font-size: 0.9em;
+                padding: 6px;
+                margin: 8px 0;
+            }
+            
+            .game-area {
+                flex-direction: column;
+                gap: 15px;
+                min-height: auto;
+            }
+            
+            .cards {
+                order: 1;
+                gap: 8px;
+                flex-shrink: 0;
+                overflow-y: visible;
+                max-height: none;
+            }
+            
+            .card {
+                padding: 10px;
+                font-size: 0.8em;
+                border-radius: 8px;
+                min-height: 50px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            
+            .card small {
+                font-size: 0.75em;
+                margin-top: 3px;
+            }
+            
+            .atmosphere {
+                order: 2;
+                height: 250px;
+                min-height: 250px;
+                flex-shrink: 0;
+            }
+            
+            .drop-zone {
+                font-size: 0.7em;
+                padding: 3px;
+                line-height: 1.1;
+            }
+            
+            button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+                margin: 15px auto 30px auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 3px;
+            }
+            
+            .game-container {
+                padding: 8px;
+                margin-bottom: 40px;
+            }
+            
+            h1 {
+                font-size: 1.2em;
+                margin-bottom: 6px;
+            }
+            
+            .atmosphere {
+                height: 220px;
+                min-height: 220px;
+            }
+            
+            .card {
+                padding: 8px;
+                font-size: 0.75em;
+                min-height: 45px;
+            }
+            
+            .drop-zone {
+                font-size: 0.65em;
+                padding: 2px;
+            }
+            
+            .score {
+                font-size: 0.85em;
+                padding: 5px;
+            }
+            
+            .instructions {
+                font-size: 0.8em;
+                padding: 5px;
+            }
+            
+            button {
+                padding: 8px 16px;
+                font-size: 0.85em;
+                margin-bottom: 40px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .game-container {
+                margin-bottom: 50px;
+            }
+            
+            .atmosphere {
+                height: 200px;
+                min-height: 200px;
+            }
+            
+            .card {
+                padding: 7px;
+                font-size: 0.7em;
+                min-height: 40px;
+            }
+            
+            .drop-zone {
+                font-size: 0.6em;
+            }
+            
+            h1 {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 320px) {
+            body {
+                padding: 2px;
+            }
+            
+            .game-container {
+                padding: 6px;
+                margin-bottom: 60px;
+            }
+            
+            .atmosphere {
+                height: 180px;
+                min-height: 180px;
+            }
+            
+            .card {
+                padding: 6px;
+                font-size: 0.65em;
+                min-height: 35px;
+            }
+            
+            .drop-zone {
+                font-size: 0.55em;
+                padding: 1px;
+            }
+            
+            h1 {
+                font-size: 1em;
+                margin-bottom: 5px;
+            }
+            
+            .score {
+                font-size: 0.8em;
+                padding: 4px;
+            }
+            
+            .instructions {
+                font-size: 0.75em;
+                padding: 4px;
+            }
+            
+            button {
+                padding: 6px 12px;
+                font-size: 0.8em;
+                margin-bottom: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+     
+
+        <div class="score">
+            Acertos: <span id="pontos">0</span> de 5
+        </div>
+
+        <div class="game-area">
+            <div class="atmosphere">
+                <div class="drop-zone" id="zona5" data-camada="5">EXOSFERA<br>🚀 Satélites</div>
+                <div class="drop-zone" id="zona4" data-camada="4">TERMOSFERA<br>🌈 Auroras</div>
+                <div class="drop-zone" id="zona3" data-camada="3">MESOSFERA<br>⭐ Meteoros</div>
+                <div class="drop-zone" id="zona2" data-camada="2">ESTRATOSFERA<br>🛡️ Ozônio</div>
+                <div class="drop-zone" id="zona1" data-camada="1">TROPOSFERA<br>🌧️ Chuvas</div>
+            </div>
+
+            <div class="cards">
+                <div class="card" draggable="true" data-camada="1">
+                    1️⃣ <br>
+                    <small>Onde vivemos e chove: camada de ar em contato direto com a superfície terrestre, com mais gases e onde ocorrem a maioria dos fenômenos atmosféricos, como chuvas, ventos e relâmpagos.</small>
+                </div>
+                <div class="card" draggable="true" data-camada="2">
+                    2️⃣ <br>
+                    <small>Camada com gás ozônio que absorve parte dos raios ultravioleta do Sol, protegendo contra câncer de pele, problemas oculares e danos ao sistema imunológico; nela, o ar é rarefeito.</small>
+                </div>
+                <div class="card" draggable="true" data-camada="3">
+                    3️⃣ <br>
+                    <small>Camada mais fria da atmosfera, com temperaturas de até −100 °C e ar rarefeito, onde ocorre a chuva de meteoros — popularmente chamada de estrelas cadentes.</small>
+                </div>
+                <div class="card" draggable="true" data-camada="4">
+                    4️⃣ <br>
+                    <small>Camada mais quente da atmosfera, rica em íons (ionosfera) e com temperaturas elevadas. Nela ocorrem as auroras: boreal (no Hemisfério Norte) e austral (no Hemisfério Sul), que são luzes coloridas que iluminam o céu perto dos polos.</small>
+                </div>
+                <div class="card" draggable="true" data-camada="5">
+                    5️⃣ <br>
+                    <small>É o limite entre a atmosfera e o espaço interplanetário, com ar extremamente rarefeito, formado principalmente por hidrogênio e hélio. A temperatura é muito alta durante o dia e muito baixa à noite. Nessa camada orbitam os satélites artificiais.</small>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="reiniciar()">🔄 Jogar Novamente</button>
+    </div>
+
+    <div class="message" id="mensagem">
+        <h3 id="titulo-mensagem"></h3>
+        <p id="texto-mensagem"></p>
+        <button onclick="fecharMensagem()">OK</button>
+    </div>
+
+    <script>
+        let pontos = 0;
+        let cardsColocadas = new Set();
+
+        // Drag and Drop
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('dragstart', iniciarArrastar);
+            card.addEventListener('dragend', terminarArrastar);
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', permitirSoltar);
+            zone.addEventListener('dragenter', destacarZona);
+            zone.addEventListener('dragleave', removerDestaque);
+            zone.addEventListener('drop', soltar);
+        });
+
+        function iniciarArrastar(e) {
+            this.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', this.dataset.camada);
+        }
+
+        function terminarArrastar(e) {
+            this.classList.remove('dragging');
+        }
+
+        function permitirSoltar(e) {
+            e.preventDefault();
+        }
+
+        function destacarZona(e) {
+            e.preventDefault();
+            this.classList.add('highlight');
+        }
+
+        function removerDestaque(e) {
+            this.classList.remove('highlight');
+        }
+
+        function soltar(e) {
+            e.preventDefault();
+            this.classList.remove('highlight');
+            
+            const camadaArrastada = e.dataTransfer.getData('text/plain');
+            const zonaCorreta = this.dataset.camada;
+            const card = document.querySelector(`.card[data-camada="${camadaArrastada}"]`);
+            
+            if (camadaArrastada === zonaCorreta) {
+                // Acertou!
+                this.classList.add('correct');
+                if (card) {
+                    card.style.display = 'none';
+                }
+                cardsColocadas.add(camadaArrastada);
+                pontos++;
+                document.getElementById('pontos').textContent = pontos;
+                
+                mostrarMensagem('Parabéns! 🎉', getCamadaInfo(camadaArrastada));
+                
+                if (pontos === 5) {
+                    setTimeout(() => {
+                        mostrarMensagem('Você ganhou! 🏆', 'Agora você conhece todas as camadas da atmosfera!');
+                    }, 1500);
+                }
+            } else {
+                // Errou
+                mostrarMensagem('Tente novamente! 🤔', 'Esta não é a posição correta. Lembre-se: a troposfera é a primeira camada!');
+            }
+        }
+
+        function getCamadaInfo(camada) {
+            const infos = {
+                '1': 'A troposfera é onde vivemos! Aqui acontecem as chuvas e ventos.',
+                '2': 'A estratosfera nos protege dos raios solares com o ozônio!',
+                '3': 'A mesosfera é a mais fria! Os meteoros viram "estrelas cadentes".',
+                '4': 'A termosfera é muito quente e tem as belas auroras!',
+                '5': 'A exosfera é o limite com o espaço! Onde ficam os satélites.'
+            };
+            return infos[camada];
+        }
+
+        function mostrarMensagem(titulo, texto) {
+            document.getElementById('titulo-mensagem').textContent = titulo;
+            document.getElementById('texto-mensagem').textContent = texto;
+            document.getElementById('mensagem').classList.add('show');
+        }
+
+        function fecharMensagem() {
+            document.getElementById('mensagem').classList.remove('show');
+        }
+
+        function reiniciar() {
+            pontos = 0;
+            cardsColocadas.clear();
+            
+            document.getElementById('pontos').textContent = pontos;
+            
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.classList.remove('correct', 'highlight');
+            });
+            
+            fecharMensagem();
+        }
+
+        // Suporte touch para mobile
+        let touchItem = null;
+        let touchOffset = { x: 0, y: 0 };
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('touchstart', handleTouchStart, { passive: false });
+            card.addEventListener('touchmove', handleTouchMove, { passive: false });
+            card.addEventListener('touchend', handleTouchEnd, { passive: false });
+        });
+
+        function handleTouchStart(e) {
+            e.preventDefault();
+            touchItem = this;
+            const touch = e.touches[0];
+            const rect = this.getBoundingClientRect();
+            
+            // Calcular offset do centro do card
+            touchOffset.x = rect.width / 2;
+            touchOffset.y = rect.height / 2;
+            
+            this.style.position = 'fixed';
+            this.style.zIndex = '1000';
+            this.style.pointerEvents = 'none';
+            this.classList.add('dragging');
+            
+            // Posicionar card centralizado no dedo
+            this.style.left = (touch.clientX - touchOffset.x) + 'px';
+            this.style.top = (touch.clientY - touchOffset.y) + 'px';
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            if (!touchItem) return;
+            
+            const touch = e.touches[0];
+            
+            // Centralizar card no dedo
+            touchItem.style.left = (touch.clientX - touchOffset.x) + 'px';
+            touchItem.style.top = (touch.clientY - touchOffset.y) + 'px';
+        }
+
+        function handleTouchEnd(e) {
+            e.preventDefault();
+            if (!touchItem) return;
+            
+            const touch = e.changedTouches[0];
+            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+            const dropZone = elementBelow?.closest('.drop-zone');
+            
+            // Reset position and styles
+            touchItem.style.position = '';
+            touchItem.style.left = '';
+            touchItem.style.top = '';
+            touchItem.style.zIndex = '';
+            touchItem.style.pointerEvents = '';
+            touchItem.classList.remove('dragging');
+            
+            if (dropZone) {
+                const camadaArrastada = touchItem.dataset.camada;
+                const zonaCorreta = dropZone.dataset.camada;
+                
+                if (camadaArrastada === zonaCorreta) {
+                    dropZone.classList.add('correct');
+                    touchItem.style.display = 'none';
+                    cardsColocadas.add(camadaArrastada);
+                    pontos++;
+                    document.getElementById('pontos').textContent = pontos;
+                    
+                    mostrarMensagem('Parabéns! 🎉', getCamadaInfo(camadaArrastada));
+                    
+                    if (pontos === 5) {
+                        setTimeout(() => {
+                            mostrarMensagem('Você ganhou! 🏆', 'Agora você conhece todas as camadas da atmosfera!');
+                        }, 1500);
+                    }
+                } else {
+                    mostrarMensagem('Tente novamente! 🤔', 'Esta não é a camada correta. Lembre-se: a troposfera é a primeira camada!');
+                }
+            }
+            
+            touchItem = null;
+        }
+    </script>
+</body>
+</html>
