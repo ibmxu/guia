@@ -67,7 +67,7 @@
   box-shadow: 0 3px 8px rgba(156, 39, 176, 0.2);
   color: #4a148c;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: normal; 
   max-width: 100%;
   box-sizing: border-box;
   position: relative;
@@ -130,4 +130,5 @@
   min-height: 600px;
   border: none;
 }
+
 
