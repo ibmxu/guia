@@ -44,7 +44,7 @@
   border-radius: 10px;
   border-left: 4px solid #2196F3;
   margin-top: 0px;
-  margin-bottom: 200px;
+  margin-bottom: 15px;
 }
 
 .highlight-box h4 {
@@ -130,3 +130,4 @@
   min-height: 600px;
   border: none;
 }
+
