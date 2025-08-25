@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Separação de Misturas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Georgia, serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .game-content {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      width: 800px;
+      height: 700px;
+      max-width: 95vw;
+      max-height: 95vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .game-header {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .game-title {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 8px;
+    }
+
+    .game-stats {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      padding: 6px 12px;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+      font-size: 0.85em;
+    }
+
+    .stat-points { background: #3498db; }
+    .stat-lives { background: #e74c3c; }
+    .stat-level { background: #27ae60; }
+
+    .level-title {
+      text-align: center;
+      font-size: 1.2em;
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+
+    .mixture-display {
+      text-align: center;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border: 2px solid #e9ecef;
+    }
+
+    .mixture-icon {
+      font-size: 2.5em;
+      margin-bottom: 8px;
+    }
+
+    .mixture-name {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .mixture-description {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .methods-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .method-button {
+      padding: 10px 5px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .method-button:hover {
+      border-color: #4CAF50;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .method-button.selected {
+      background: #4CAF50;
+      color: white;
+      border-color: #45a049;
+      transform: scale(1.05);
+    }
+
+    .method-button.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .method-icon {
+      font-size: 1.5em;
+      margin-bottom: 5px;
+    }
+
+    .method-name {
+      font-weight: bold;
+      font-size: 0.75em;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .check-button {
+      display: block;
+      margin: 0 auto 15px;
+      padding: 12px 25px;
+      background: linear-gradient(45deg, #27ae60, #2ecc71);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .check-button:hover:not(:disabled) {
+      background: linear-gradient(45deg, #229954, #27ae60);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(39, 174, 96, 0.3);
+    }
+
+    .check-button:disabled {
+      background: #bdc3c7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result-display {
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.9em;
+    }
+
+    .result-correct {
+      background: #d4edda;
+      border: 2px solid #c3e6cb;
+      color: #155724;
+    }
+
+    .result-incorrect {
+      background: #f8d7da;
+      border: 2px solid #f5c6cb;
+      color: #721c24;
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .result-icon {
+      font-size: 1.3em;
+      margin-right: 8px;
+    }
+
+    .result-title {
+      font-size: 1em;
+      font-weight: bold;
+    }
+
+    .result-explanation {
+      font-size: 0.85em;
+      line-height: 1.4;
+    }
+
+    .game-complete {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 15px;
+      color: white;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .trophy-icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+    }
+
+    .stars-display {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .star {
+      font-size: 1.5em;
+      margin: 0 5px;
+    }
+
+    .star.filled {
+      color: #f1c40f;
+    }
+
+    .star.empty {
+      color: rgba(255,255,255,0.3);
+    }
+
+    .restart-button {
+      background: linear-gradient(45deg, #3498db, #2980b9);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 20px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .restart-button:hover {
+      background: linear-gradient(45deg, #2980b9, #21618c);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(52, 152, 219, 0.3);
+    }
+
+    .complete-title {
+      font-size: 1.8em;
+      margin-bottom: 15px;
+    }
+
+    .complete-level {
+      font-size: 1.2em;
+      margin-bottom: 8px;
+    }
+
+    .complete-score {
+      font-size: 1em;
+      margin-bottom: 8px;
+    }
+
+    /* Responsividade para telas menores */
+    @media (max-width: 650px) {
+      body {
+        padding: 5px;
+        align-items: flex-start;
+        padding-top: 10px;
+      }
+      
+      .game-content {
+        width: 95%;
+        height: auto;
+        max-height: 90vh;
+        min-height: 500px;
+        border-radius: 12px;
+      }
+      
+      .game-header {
+        margin-bottom: 10px;
+      }
+      
+      .game-title {
+        font-size: 1.1em;
+        margin-bottom: 6px;
+      }
+      
+      .stat-item {
+        padding: 4px 8px;
+        font-size: 0.75em;
+      }
+      
+      .level-title {
+        font-size: 1em;
+        margin-bottom: 10px;
+      }
+      
+      .mixture-display {
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      
+      .mixture-icon {
+        font-size: 2em;
+        margin-bottom: 5px;
+      }
+      
+      .mixture-name {
+        font-size: 0.95em;
+        margin-bottom: 3px;
+      }
+      
+      .mixture-description {
+        font-size: 0.8em;
+      }
+      
+      .methods-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+        margin-bottom: 10px;
+      }
+      
+      .method-button {
+        height: 70px;
+        padding: 8px 4px;
+      }
+      
+      .method-icon {
+        font-size: 1.3em;
+        margin-bottom: 3px;
+      }
+      
+      .method-name {
+        font-size: 0.7em;
+      }
+      
+      .check-button {
+        padding: 10px 20px;
+        margin-bottom: 10px;
+        font-size: 0.9em;
+      }
+      
+      .result-display {
+        padding: 12px;
+        margin-top: 10px;
+        font-size: 0.8em;
+      }
+      
+      .result-explanation {
+        font-size: 0.75em;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .game-content {
+        width: 98%;
+        padding: 15px;
+      }
+      
+      .methods-grid {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+      
+      .method-button {
+        height: 60px;
+      }
+      
+      .game-title {
+        font-size: 1em;
+      }
+      
+      .stat-item {
+        padding: 3px 6px;
+        font-size: 0.7em;
+      }
+    }
+
+    /* Scroll personalizado */
+    .game-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .game-content::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+
+    .game-content::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 3px;
+    }
+
+    .game-content::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-content">
+    <div id="gameArea">
+      <!-- O jogo será carregado aqui -->
+    </div>
+  </div>
+
+<script>
+class SeparationGame {
+  constructor() {
+    this.currentLevel = 0;
+    this.score = 0;
+    this.selectedMethod = '';
+    this.showResult = false;
+    this.gameComplete = false;
+    this.lives = 3;
+    
+    this.mixtures = [
+      {
+        id: 1,
+        name: "Areia e Água",
+        description: "Uma mistura de areia grossa com água limpa",
+        image: "🏖️💧",
+        correctMethod: ["filtração"],
+        explanation: "A filtração separa sólidos insolúveis de líquidos usando um filtro."
+      },
+      {
+        id: 2,
+        name: "Sal e Água",
+        description: "Água salgada (sal dissolvido na água)",
+        image: "🧂💧",
+        correctMethod: ["evaporação", "destilação"],
+        explanation: "Tanto a evaporação quanto a destilação funcionam! A evaporação remove a água deixando o sal, e a destilação recupera a água pura."
+      },
+      {
+        id: 3,
+        name: "Ferro e Areia",
+        description: "Pequenos pedaços de ferro misturados com areia",
+        image: "🔩🏖️",
+        correctMethod: ["separação magnética"],
+        explanation: "O ímã atrai apenas o ferro, separando-o da areia."
+      },
+      {
+        id: 4,
+        name: "Óleo e Água",
+        description: "Óleo de cozinha misturado com água",
+        image: "🛢️💧",
+        correctMethod: ["decantação"],
+        explanation: "Os líquidos se separam por densidade - o óleo fica em cima."
+      },
+      {
+        id: 5,
+        name: "Açúcar e Areia",
+        description: "Açúcar cristalizado misturado com areia fina",
+        image: "🍬🏖️",
+        correctMethod: ["dissolução"],
+        explanation: "A água dissolve o açúcar, mas não a areia. Depois filtra-se."
+      },
+      {
+        id: 6,
+        name: "Álcool e Água",
+        description: "Uma mistura homogênea de álcool e água",
+        image: "🍶💧",
+        correctMethod: ["destilação"],
+        explanation: "A destilação separa líquidos com pontos de ebulição diferentes."
+      }
+    ];
+
+    this.methods = [
+      { id: "filtração", name: "Filtração", icon: "🔍" },
+      { id: "evaporação", name: "Evaporação", icon: "☀️" },
+      { id: "separação magnética", name: "Separação Magnética", icon: "🧲" },
+      { id: "decantação", name: "Decantação", icon: "⏳" },
+      { id: "dissolução", name: "Dissolução", icon: "🌊" },
+      { id: "destilação", name: "Destilação", icon: "🔥" }
+    ];
+
+    this.init();
+  }
+
+  init() {
+    this.render();
+  }
+
+  handleMethodSelect(method) {
+    if (this.showResult) return;
+    this.selectedMethod = method;
+    this.render();
+  }
+
+  checkAnswer() {
+    if (!this.selectedMethod) return;
+    
+    const currentMixture = this.mixtures[this.currentLevel];
+    const isCorrect = currentMixture.correctMethod.includes(this.selectedMethod);
+    
+    if (isCorrect) {
+      this.score += 10;
+    } else {
+      this.lives -= 1;
+    }
+    
+    this.showResult = true;
+    this.render();
+    
+    setTimeout(() => {
+      if (this.currentLevel < this.mixtures.length - 1 && this.lives > 0) {
+        this.currentLevel += 1;
+        this.selectedMethod = '';
+        this.showResult = false;
+        this.render();
+      } else {
+        this.gameComplete = true;
+        this.render();
+      }
+    }, 4000);
+  }
+
+  resetGame() {
+    this.currentLevel = 0;
+    this.score = 0;
+    this.selectedMethod = '';
+    this.showResult = false;
+    this.gameComplete = false;
+    this.lives = 3;
+    this.render();
+  }
+
+  getScoreLevel() {
+    if (this.score >= 50) return { level: "Químico Expert!", stars: 3 };
+    if (this.score >= 30) return { level: "Cientista Júnior!", stars: 2 };
+    if (this.score >= 10) return { level: "Aprendiz!", stars: 1 };
+    return { level: "Continue tentando!", stars: 0 };
+  }
+
+  render() {
+    const gameArea = document.getElementById('gameArea');
+    
+    if (this.gameComplete) {
+      const scoreLevel = this.getScoreLevel();
+      gameArea.innerHTML = `
+        <div class="game-complete">
+          <div class="trophy-icon">🏆</div>
+          <h2 class="complete-title">Jogo Completo!</h2>
+          <div class="stars-display">
+            ${[...Array(3)].map((_, i) => 
+              `<span class="star ${i < scoreLevel.stars ? 'filled' : 'empty'}">★</span>`
+            ).join('')}
+          </div>
+          <p class="complete-level">${scoreLevel.level}</p>
+          <p class="complete-score">
+            Pontuação Final: <strong>${this.score} pontos</strong>
+          </p>
+          <p style="margin-bottom: 25px;">
+            Vidas restantes: ${this.lives}/3 ❤️
+          </p>
+          <button class="restart-button" onclick="game.resetGame()">
+            🔄 Jogar Novamente
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    const currentMixture = this.mixtures[this.currentLevel];
+    const isCorrect = currentMixture.correctMethod.includes(this.selectedMethod);
+
+    gameArea.innerHTML = `
+      <div class="game-header">
+        <h2 class="game-title">🧪 Separação de Misturas 🧪</h2>
+        <div class="game-stats">
+          <span class="stat-item stat-points">Pontos: ${this.score}</span>
+          <span class="stat-item stat-lives">Vidas: ${Array(this.lives).fill('❤️').join('')}</span>
+          <span class="stat-item stat-level">Nível: ${this.currentLevel + 1}/${this.mixtures.length}</span>
+        </div>
+      </div>
+
+      <h3 class="level-title">Como separar esta mistura?</h3>
+      
+      <div class="mixture-display">
+        <div class="mixture-icon">${currentMixture.image}</div>
+        <div class="mixture-name">${currentMixture.name}</div>
+        <div class="mixture-description">${currentMixture.description}</div>
+      </div>
+
+      <div class="methods-grid">
+        ${this.methods.map(method => `
+          <div class="method-button ${this.selectedMethod === method.id ? 'selected' : ''} ${this.showResult ? 'disabled' : ''}"
+               onclick="${this.showResult ? '' : `game.handleMethodSelect('${method.id}')`}">
+            <div class="method-icon">${method.icon}</div>
+            <div class="method-name">${method.name}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      ${!this.showResult ? `
+        <button class="check-button" 
+                onclick="game.checkAnswer()" 
+                ${!this.selectedMethod ? 'disabled' : ''}>
+          Verificar Resposta
+        </button>
+      ` : ''}
+
+      ${this.showResult ? `
+        <div class="result-display ${isCorrect ? 'result-correct' : 'result-incorrect'}">
+          <div class="result-header">
+            <span class="result-icon">${isCorrect ? '✅' : '❌'}</span>
+            <span class="result-title">
+              ${isCorrect ? 'Correto! +10 pontos' : 'Incorreto! -1 vida'}
+            </span>
+          </div>
+          <p style="margin-bottom: 10px;">
+            <strong>Método(s) correto(s):</strong> ${currentMixture.correctMethod.join(' ou ')}
+          </p>
+          <p class="result-explanation">${currentMixture.explanation}</p>
+        </div>
+      ` : ''}
+    `;
+  }
+}
+
+// Inicializar o jogo quando a página carregar
+let game;
+document.addEventListener('DOMContentLoaded', function() {
+  game = new SeparationGame();
+});
+</script>
+
+</body>
+</html>
