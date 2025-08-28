@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Digital de Ciências</title>
+    
+    <!-- API- Animação de Partículas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    
+    <!-- CSS Modularizado - Links GitHub -->
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/base.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/pages.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/components.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/navigation.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/summary.css">
+<link rel="stylesheet" href="https://ibmxu.github.io/guia/responsive.css">
+    
+    <!-- CSS personalizado - Vídeo -->
+    <link rel="stylesheet" href="https://ibmxu.github.io/guia/stylevideo.css">
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="container">
+	
+        <!-- Página 1: Capa -->
+        <div class="page active">
+            <div class="page-header">
+                <!-- Animação de fundo -->
+                <div id="animacao-biologica"></div>
+                
+                <!-- Conteúdo do header -->
+                <div class="page-header-content">
+                    <h1>Guia interativo de Ciências</h1>
+                    <p>6º ano do ensino fundamental</p>
+                </div>
+            </div>
+			
+            <div class="cover-page">
+                <div class="text-box">
+                    <h3>Bem-vindo ao seu guia de estudos!</h3>
+                    <p>Este guia interativo foi desenvolvido para tornar o aprendizado de ciências mais dinâmico e interessante. Explore os conceitos através de textos, imagens e animações, agora continue ou use o sumário </p>
+                </div>
+            </div>
+				
+            <!--Segunda caixa de texto -->
+			
+            <!-- === Novo Sumário Expandível === -->
+			
+                    <div class="sumario-container" style="width: 600px; max-width: 90%; margin-left: auto; margin-right: auto;">
+                    <h4 class="sumario-titulo">Sumário</h4>
+
+                    <!-- Sumario unidade 1 -->
+                    <div class="unidade" id="unidade1">
+                    <div class="unidade-header" onclick="toggleUnidade('unidade1')">
+                    <span class="expand-icon">▶</span> Unidade 1 – Um ambiente dinâmico </div>
+                    <div class="subtopicos" id="subtopicos1"> <!-- codigo pra criar subtopico -->
+                    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(1)">1.1 A Vida em Constante Adaptação</a></div>
+                    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(2)">1.2 Sistema Terra </a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(3)">1.3 O que é Ecologia e Ecossistema ?</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(4)">1.4 Componentes Vivos e Não Vivos</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(5)">1.5 Ecossistemas Brasileiros</a></div>
+				    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(6)">1.6 Biodiversidade na Xilogravura e Cordel</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(7)">1.7 Cadeias Alimentares e Teias Alimentares</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(8)">1.8 Produtores, Consumidores e Decompositores</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(9)">1.9  Impactos Ambientais e Sustentabilidade</a></div>
+					<div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(10)">1.10 Importância da Educação Ambiental</a></div>
+					</div></div>
+
+
+			<!-- Sumario unidade 2 -->
+<div class="unidade" id="unidade2">
+    <div class="unidade-header" onclick="toggleUnidade('unidade2')">
+        <span class="expand-icon">▶</span> Unidade 2 – O Planeta Terra
+    </div>
+    <div class="subtopicos" id="subtopicos2"> <!-- codigo pra criar subtopico -->
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(11)">2.1 Surgimento do Universo</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(12)">2.2 Formação da Terra</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(13)">2.3 Transformações da Terra</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(14)">2.4 O Formato da Terra</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(15)">2.5 Estrutura Interna da Terra</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(16)">2.6 Fenômenos Naturais</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(17)">2.7 Atmosfera da Terra</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(18)">2.8 Previsões Científicas</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(19)">2.9 Migrações e Refugiados</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(20)">2.10 Escalas e Proporções</a></div>
+    </div>
+</div>
+
+					
+					<!-- Sumario unidade 3 -->
+<div class="unidade" id="unidade3">
+    <div class="unidade-header" onclick="toggleUnidade('unidade3')">
+        <span class="expand-icon">▶</span> Unidade 3 – A água
+    </div>
+    <div class="subtopicos" id="subtopicos3"> <!-- codigo pra criar subtopico -->
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(21)">3.1 A Importância da Água</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(22)">3.2 Consumo da Água e Desperdício</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(23)">3.3 Estados Físicos da Água</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(24)">3.4 Mudanças de Estado Físico</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(25)">3.5 Distribuição da Água na Terra</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(26)">3.6 Água nos Seres Vivos</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(27)">3.7 Hidrosfera: Águas Oceânicas, Continentais e Atmosféricas</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(28)">3.8 Aquífero Guarani</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(29)">3.9 Ciclo Hidrológico</a></div>
+        <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(30)">3.10 Misturas com Água e Solubilidade</a></div>
+    </div>
+</div>
+
+					
+<!-- Sumario unidade 4 -->
+<div class="unidade" id="unidade4">
+  <div class="unidade-header" onclick="toggleUnidade('unidade4')">
+    <span class="expand-icon">▶</span> Unidade 4 – A crosta terrestre
+  </div>
+  <div class="subtopicos" id="subtopicos4">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(31)">4.1 A Crosta Terrestre</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(32)">4.2 Rochas e Minerais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(33)">4.3 Minérios e a Mineração</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(34)">4.4 Tipos de Rochas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(35)">4.5 Fósseis nas Rochas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(36)">4.6 O Solo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(37)">4.7 Formação do Solo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(38)">4.8 Intemperismo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(39)">4.9 Uso do Solo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(40)">4.10 Conservação do Solo</a></div>
+  </div>
+</div>
+
+					
+<!-- Sumario unidade 5 -->
+<div class="unidade" id="unidade5">
+  <div class="unidade-header" onclick="toggleUnidade('unidade5')">
+    <span class="expand-icon">▶</span> Unidade 5 – De olho no céu
+  </div>
+  <div class="subtopicos" id="subtopicos5">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(41)">5.1 Olhando para o céu</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(42)">5.2 O Sol</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(43)">5.3 A Terra e seus movimentos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(44)">5.4 As estações do ano</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(45)">5.5 A Lua</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(46)">5.6 Fases da Lua</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(47)">5.7 Outros astros</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(48)">5.8 Instrumentos de observação</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(49)">5.9 Curiosidades do Universo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(50)">5.10 Vida fora da Terra</a></div>
+  </div>
+</div>
+			
+<!-- Sumario unidade 6 -->
+<div class="unidade" id="unidade6">
+  <div class="unidade-header" onclick="toggleUnidade('unidade6')">
+    <span class="expand-icon">▶</span> Unidade 6 – Os materiais
+  </div>
+  <div class="subtopicos" id="subtopicos6">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(51)">6.1 O que são materiais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(52)">6.2 Propriedades dos materiais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(53)">6.3 Materiais naturais e artificiais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(54)">6.4 Estados físicos da matéria</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(55)">6.5 Mudanças de estado físico</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(56)">6.6 Misturas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(57)">6.7 Separação de misturas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(58)">6.8 Transformações dos materiais</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(59)">6.9 Sustentabilidade e reciclagem</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(60)">6.10 Materiais e o meio ambiente</a></div>
+  </div>
+</div>
+				
+<!-- Sumario unidade 7 -->
+<div class="unidade" id="unidade7">
+  <div class="unidade-header" onclick="toggleUnidade('unidade7')">
+    <span class="expand-icon">▶</span> Unidade 7 – Vida, célula e sistema nervoso humano
+  </div>
+  <div class="subtopicos" id="subtopicos7">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(61)">7.1 O que é vida</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(62)">7.2 A célula</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(63)">7.3 Estrutura da célula</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(64)">7.4 Células Eucarióticas e Procarióticas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(65)">7.5 Tecidos e órgãos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(66)">7.6 O sistema nervoso</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(67)">7.7 Cérebro, medula e nervos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(68)">7.8 Estímulos e respostas</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(69)">7.9 Os cinco sentidos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(70)">7.10 Cuidados com o sistema nervoso</a></div>
+  </div>
+</div>
+					
+<!-- Sumario unidade 8 -->
+<div class="unidade" id="unidade8">
+  <div class="unidade-header" onclick="toggleUnidade('unidade8')">
+    <span class="expand-icon">▶</span> Unidade 8 – Os sentidos e os movimentos
+  </div>
+  <div class="subtopicos" id="subtopicos8">
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(71)">8.1 Os sentidos do corpo</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(72)">8.2 A visão</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(73)">8.3 A audição</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(74)">8.4 O tato</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(75)">8.5 O paladar</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(76)">8.6 O olfato</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(77)">8.7 O sistema locomotor</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(78)">8.8 Os músculos</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(79)">8.9 As articulações</a></div>
+    <div class="subtopico"><a href="#" class="subtopico-link" onclick="goToPage(80)">8.10 Cuidando do corpo</a></div>
+  </div>
+</div>
+             
+				<!-- exemplo de link rapido na pagina
+           
+                    <a href="#" class="sumario-link" onclick="goToPage(8)">veja na pagina 8</a><br>
+					
+					-->
+                </div>
+            </div>
+			
+			
+			  <!--  Unidade 1 - 1.1 – Um ambiente dinâmico - pagina1 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>A Vida em Constante Adaptação</h1>
+              
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Um ambiente dinâmico e as adaptações</h3>
+                    <p>Ao longo das proximas páginas vamos compreender como o ambiente está em constante transformação e de que forma os seres vivos se adaptam a essas mudanças para sobreviver e prosperar, agora assista o video abaixo e responda a questão</p>
+                </div>
+				
+			
+				 <!--  VIDEO -->
+				
+				
+	 <div class="video-container-box">
+                
+                <div class="video-component" 
+                     data-video-id="jTOjPHQIlBQ" 
+                     data-question-time="23"
+                     data-question="Você já notou alguma mudança no ambiente onde você mora?"
+                     data-options='["Sim", "Não", "Nunca reparei"]'
+                     data-feedback="Parabéns, continue assim !">
+                    
+                    <div class="video-wrapper">
+                        <iframe class="youtube-player" 
+                                src="https://www.youtube.com/embed/jTOjPHQIlBQ?enablejsapi=1&rel=0&vq=hd1080&hd=1&autohide=0&controls=1" 
+                                allowfullscreen>
+                        </iframe>
+                        
+                        <div class="question-overlay">
+                            <div class="question-card">
+                                <div class="question-title"></div>
+                                <div class="options"></div>
+                                <div class="feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+    <div class="progress-barvi">
+  <div class="progress-fill"></div>
+  
+</div>
+                    <div class="video-status">Clique em play para começar</div>
+                </div>
+            </div>
+				
+				 <!--  fim do VIDEO -->
+				
+
+				<div class="highlight-box">
+                        <h4>Por que estudar um Ambiente Dinâmico?</h4>
+                        <p>Por bilhões de anos, a Terra passou por transformações naturais que moldaram os ambientes e exigiram que os seres vivos se adaptassem para sobreviver. A maior parte da vida se desenvolveu antes do surgimento dos seres humanos, que aparecem apenas recentemente nesse processo. Estudar um ambiente dinâmico nos ajuda a compreender essas mudanças e como elas influenciam a vida</p>
+					</div>
+				<div class="barra-lupa"> Assista a um fragmento do documentário A Vida no Nosso Planeta, de David Attenborough, que mostra a história da Terra e a evolução da vida ao longo de bilhões de anos, a versão completa está disponível apenas na Netflix </div>
+				<div class="video-container-box">
+                <div class="video-component" >
+                    <div class="video-wrapper">
+                        <iframe class="youtube-player" 
+                                src="https://www.youtube.com/embed/iKQVKJX7chY?si=_qwR22sG2yrQPw1b&vq=hd1080" 
+                                allowfullscreen>
+                        </iframe>
+                    </div> 
+                </div>
+            </div>
+	
+            </div>
+        </div>
+		
+		
+		 <!-- ==========Unidade 1 ====== -->
+        
+        <!-- Unidade 1 – 1.2 As Camadas da Terra- pagina 02 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Sistema Terra</h1>
+                
+            </div>
+            <div class="page-content">
+			
+                <div class="text-box">
+                    <h3>As Quatro Esferas da Terra</h3>
+                    <p>A Terra funciona como um sistema formado por quatro partes principais: <b>litosfera</b> (solo e rochas), <b>hidrosfera</b> (águas), <b>atmosfera</b> (ar) e <b>biosfera</b> (onde vivem os seres vivos). Essas partes trabalham juntas para manter a vida e explicar coisas como o ciclo da água, o clima e onde vivem os seres vivos.</p>
+                </div>
+		    
+		<div class="barra-lupa"> Clique nos ícones para explorar imagens, aprender mais e ver exemplos.</div>
+		<div style="height: 100vh;">
+                 <iframe src="https://ibmxu.github.io/guia/galeria-com-modal/as_camadas_%20da_terra.html" style="width: 100%; height: 100%; border: none;"></iframe>
+                </div>
+				
+            </div>
+        </div>
+		
+		
+		 <!--  Unidade 1 – 1.3 - O que é Ecologia e Ecossistema? - pagina03 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>O que é Ecologia e Ecossistema?</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Ecologia e Ecossistema</h3>
+                    <p>A ecologia estuda como os seres vivos se relacionam com o ambiente. O ecossistema é o lugar onde vivem plantas, animais, fungos e bactérias, junto com água, ar, solo e luz. Tudo está ligado: os seres vivos usam o ambiente e também mudam ele, como as árvores que precisam de água e solo, mas dão abrigo e oxigênio.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Unidade 1 – 1.4 – Componentes Vivos e Não Vivos - pagina04 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Componentes Vivos e Não Vivos</h1>
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Componentes Bióticos e Abióticos</h3>
+                    <p>Em todo ecossistema existem partes vivas, chamadas de bióticas (plantas, animais, fungos) e partes não vivas, chamadas de abióticas (água, ar, luz, solo, rochas). Os seres vivos usam essas partes para viver e também mudam elas. Saber isso ajuda a entender as cadeias alimentares e como tudo fica em equilíbrio na natureza.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Unidade 1 – 1.5 - Ecossistemas Brasileiros - pagina05 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Ecossistemas Brasileiros</h1>
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Ecossistemas Brasileiros</h3>
+                    <p>O Brasil tem seis grandes ecossistemas: Amazônia (floresta úmida), Cerrado (savana), Caatinga (vegetação seca), Mata Atlântica (floresta perto do mar), Pantanal (área alagada) e Pampa (campos do Sul). Cada um tem plantas e animais que se adaptaram ao clima, ao solo e à água do lugar.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Unidade 1: 1.6 -  Biodiversidade na Xilogravura e no Cordel- pagina06 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Biodiversidade na Xilogravura e no Cordel</h1>
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Cordel e Xilogravura</h3>
+                    <p>No Nordeste, a xilogravura (gravura na madeira) e o cordel (poemas rimados) contam histórias do sertão. Eles mostram a natureza, os animais e a vida do povo, ajudando a preservar a cultura e a biodiversidade dessa região.</p>
+                </div>
+				
+				
+            </div>
+        </div>
+        
+        <!-- Unidae 1: 1.7 Cadeias Alimentares e Teias Alimentares  - pagina07-->
+        <div class="page">
+            <div class="page-header">
+                <h1>Cadeias e Teias Alimentares</h1>
+               
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                  <h3>Cadeias e Teias Alimentares</h3>
+                    <p>A cadeia alimentar mostra quem come quem, em uma linha: por exemplo, planta → coelho → raposa → bactérias. Já a teia alimentar junta várias cadeias, mostrando que um ser vivo pode ter vários papéis. Assim, vemos como tudo no ecossistema está ligado.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Unidade1: 1.8 - Produtores, Consumidores e Decompositores - pagina08 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Produtores, Consumidores <br>
+				    e Decompositores</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Produtores, Consumidores e Decompositores</h3>
+                    <p>No ecossistema, os produtores (como plantas) fazem seu próprio alimento. Os consumidores pegam energia comendo outros seres vivos: os primários comem plantas (coelhos), os secundários comem os primários (sapos) e os terciários comem os secundários (onças). Já os decompositores (fungos e bactérias) reciclam o que morreu, devolvendo nutrientes para a natureza.</p>
+                </div>
+            </div>
+        </div>
+			
+		        <!-- Unidade1: 1.9 - Impactos Ambientais e Sustentabilidade - pagina9 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Impactos Ambientais e Sustentabilidade</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Impactos Ambientais e Sustentabilidade</h3>
+                    <p>As atividades humanas, como desmatamento, poluição e uso exagerado de recursos, causam impactos no ambiente. A sustentabilidade quer dizer usar os recursos sem acabar com eles, para que a natureza continue viva e possa ajudar as próximas gerações.</p>
+                </div>
+            </div>
+        </div>
+		
+		        <!-- Unidade1: 1.10 - Produtores, Consumidores e Decompositores - pagina10 -->
+        <div class="page">
+            <div class="page-header">
+                <h1>Importância da Educação Ambiental</h1>
+                
+            </div>
+            <div class="page-content">
+                <div class="text-box">
+                    <h3>Educação Ambiental</h3>
+                    <p>A educação ambiental ensina como cuidar do meio ambiente no dia a dia. Pequenas ações, como separar o lixo, economizar água e respeitar os animais, fazem diferença. Aprender isso na escola ajuda todo mundo a proteger a natureza.</p>
+                </div>
+            </div>
+        </div>
+		
+		 <!-- ==========Unidade 2 ====== -->
+		
+		 
+<!-- Unidade 2 – 2.1 Surgimento do Universo - página 11 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Surgimento do Universo</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Como tudo começou</h3>
+            <p>O Universo surgiu há cerca de 13,8 bilhões de anos, com uma grande explosão chamada Big Bang. Tudo estava em um ponto muito quente e denso, que começou a se expandir. Com o tempo, surgiram as primeiras estrelas, galáxias e, depois, o Sistema Solar.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 2 – 2.2 Formação da Terra - página 12 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Formação da Terra</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Do pó ao planeta</h3>
+            <p>A Terra surgiu há cerca de 4,5 bilhões de anos, a partir de poeira e gás que giravam no espaço. Esses materiais se juntaram pela força da gravidade, formando o Sol e os planetas. A Terra passou por muitas mudanças até se tornar um planeta com vida.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 2 – 2.3 Transformações da Terra - página 13 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Transformações da Terra</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Um planeta em mudança</h3>
+            <p>No começo, a Terra era muito quente e cheia de vulcões. Depois, ela esfriou e formou uma crosta sólida, a atmosfera e os oceanos. Ao longo de milhões de anos, o planeta continuou mudando por causa do clima, da água, do vento e dos seres vivos.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 2 – 2.4 O Formato da Terra - página 14 -->
+<div class="page">
+    <div class="page-header">
+        <h1>O Formato da Terra</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Redonda, não plana</h3>
+            <p>A Terra tem formato quase esférico, levemente achatado nos polos. Isso é comprovado por experimentos antigos, como o de Eratóstenes, por imagens de satélites, eclipses e pela maneira como navios desaparecem no horizonte.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 2 – 2.5 Estrutura Interna da Terra - página 15 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Estrutura Interna da Terra</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Por dentro do planeta</h3>
+            <p>A Terra é dividida em crosta, manto e núcleo. A crosta é a parte mais fina e externa. O manto é mais quente e pastoso. O núcleo tem uma parte líquida e outra sólida, com temperaturas altíssimas, próximas às do Sol.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 2 – 2.6 Fenômenos Naturais - página 16 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Fenômenos Naturais</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Sinais do interior</h3>
+            <p>Terremotos, tsunamis e erupções vulcânicas mostram que a Terra está viva por dentro. Cientistas usam sismógrafos para estudar os tremores e entender melhor as camadas internas do planeta. A lava dos vulcões também dá pistas sobre o interior da Terra.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 2 – 2.7 Atmosfera da Terra - página 17 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Atmosfera da Terra</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Camada que protege</h3>
+            <p>A atmosfera é uma camada de gases que envolve a Terra. Ela é composta por nitrogênio, oxigênio e outros gases. Suas camadas protegem o planeta e permitem a vida. Nela ocorrem fenômenos como chuvas, ventos, auroras e meteoros.</p>
+        </div>
+		<div style="height: 120vh;">
+                 <iframe src="https://ibmxu.github.io/guia/jogos/atmosfera.html" style="width: 100%; height: 100%; border: none;"></iframe>
+                </div>
+    </div>
+</div>
+
+<!-- Unidade 2 – 2.8 Previsões Científicas - página 18 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Previsões Científicas</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Estudo e prevenção</h3>
+            <p>Cientistas usam sensores, drones e satélites para estudar a Terra. Essas tecnologias ajudam a prever desastres naturais, como enchentes e erupções. Mesmo com limites, a ciência salva vidas ao informar e prevenir perigos.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 2 – 2.9 Migrações e Refugiados - página 19 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Migrações e Refugiados</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Pessoas em movimento</h3>
+            <p>Algumas pessoas mudam de lugar por vontade própria, mas outras são forçadas por guerras, desastres ou falta de recursos. Essas são chamadas de refugiadas. É importante receber essas pessoas com respeito e acolher sua cultura.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 2 – 2.10 Escalas e Proporções - página 20 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Escalas e Proporções</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Comparando tamanhos</h3>
+            <p>Usamos escalas para representar tamanhos no mapa ou em modelos. Por exemplo, o monte Everest parece enorme, mas é pequeno perto do raio da Terra. A escala ajuda a entender melhor o tamanho das coisas em relação ao planeta.</p>
+        </div>
+    </div>
+</div>
+		
+		<!-- ==========Unidade 3 ====== -->
+
+<!-- Unidade 3 – 3.1 A Importância da Água - pagina21 -->
+<div class="page">
+    <div class="page-header">
+        <h1>A Importância da Água</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Recurso essencial à vida</h3>
+            <p>A água é fundamental para todos os seres vivos. Ela está presente nos organismos, nos alimentos e em muitas funções vitais. Mesmo cobrindo grande parte do planeta, apenas uma pequena porção é própria para o consumo humano, o que exige cuidado e uso consciente.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.2 Consumo da Água e Desperdício - pagina22 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Consumo da Água e Desperdício</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Desperdício no dia a dia</h3>
+            <p>Atividades simples como lavar roupa, escovar os dentes ou dar descarga consomem muita água. Além disso, o consumo “invisível” — como na produção de alimentos — também pesa. Por exemplo, são usados cerca de 1.545 litros de água para produzir um único bife de 100 g.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.3 Estados Físicos da Água - pagina23 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Estados Físicos da Água</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Líquido, sólido e gasoso</h3>
+            <p>A água pode existir nos três estados físicos: líquida (rios, lagos), sólida (gelo, neve) e gasosa (vapor de água). Ela muda de estado conforme a temperatura, e está presente em diversas formas ao nosso redor.</p>
+        </div>
+    </div>
+</div>
+
+		
+		<!-- Unidade 3 – 3.4 Mudanças de Estado Físico - pagina24 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Mudanças de Estado Físico</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Como a água se transforma</h3>
+            <p>A água pode mudar de estado dependendo do calor ou do frio. Quando esfria, vira gelo (solidificação). Ao aquecer, vira vapor (vaporização). Também pode voltar ao estado líquido (fusão e condensação). Esses processos fazem parte do ciclo da água.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.5 Distribuição da Água na Terra - pagina25 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Distribuição da Água na Terra</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Muita água, pouca potável</h3>
+            <p>Mais de 70% da superfície da Terra é coberta por água, mas a maior parte é salgada e não pode ser consumida. Apenas uma pequena parte é doce e acessível, vinda de rios, lagos e aquíferos. Por isso, é importante evitar o desperdício.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.6 Água nos Seres Vivos - pagina26 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Água nos Seres Vivos</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Elemento vital no corpo</h3>
+            <p>O corpo humano é composto por cerca de 75% de água. A água ajuda na digestão, no transporte de nutrientes, no controle da temperatura e na eliminação de resíduos. Nos animais e nas plantas, ela também tem funções essenciais à vida.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.7 Hidrosfera: Águas Oceânicas, Continentais e Atmosféricas - pagina27 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Hidrosfera: Tipos de Água</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>O ciclo da água na natureza</h3>
+            <p>A hidrosfera é o conjunto de todas as águas do planeta. Ela inclui: águas oceânicas (mares e oceanos), águas continentais (rios, lagos, aquíferos) e águas atmosféricas (chuvas, nevoeiros e vapor). Todas essas águas estão conectadas pelo ciclo da água.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.8 Aquífero Guarani - pagina28 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Aquífero Guarani</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Reserva subterrânea de água</h3>
+            <p>O aquífero Guarani é uma das maiores reservas subterrâneas de água doce do mundo. Ele se estende por vários países da América do Sul, incluindo o Brasil. A água se infiltra no solo e se acumula entre as rochas, sendo usada para abastecimento em muitas cidades.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.9 Ciclo Hidrológico - pagina29 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Ciclo Hidrológico</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>O caminho da água</h3>
+            <p>O ciclo da água começa com a evaporação (aquecimento da água pela energia solar). O vapor sobe, condensa e forma nuvens. Quando as nuvens se enchem, ocorre a precipitação (chuva). Parte da água infiltra no solo ou volta aos rios, recomeçando o ciclo.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Unidade 3 – 3.10 Misturas com Água e Solubilidade - pagina30 -->
+<div class="page">
+    <div class="page-header">
+        <h1>Misturas com Água e Solubilidade</h1>
+    </div>
+    <div class="page-content">
+        <div class="text-box">
+            <h3>Homogênea ou heterogênea?</h3>
+            <p>A água pode formar dois tipos de mistura: homogênea (como água e açúcar) e heterogênea (como água e areia). A solubilidade é a capacidade de um material se dissolver na água. Esse tema ajuda a entender como a água transporta substâncias e como separar materiais.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- ==========Unidade 4 ====== -->
+
+<!-- Unidade 4 – 4.1 A Crosta Terrestre - pagina31 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A Crosta Terrestre</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Camada externa do planeta</h3>
+      <p>A crosta terrestre é a camada mais externa da Terra, formada principalmente por rochas e minerais. Ela é onde vivemos e de onde extraímos materiais para construções, máquinas e alimentos. Conhecer a crosta é entender como usamos e impactamos o planeta.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.2 Rochas e Minerais - pagina32 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Rochas e Minerais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>O que forma a crosta?</h3>
+      <p>As rochas são formadas por um ou mais minerais. O granito, por exemplo, é feito de quartzo, feldspato e mica. Já o calcário é formado por um único mineral. Usamos rochas e minerais na construção civil, tecnologia e até na arte.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.3 Minérios e a Mineração - pagina33 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Minérios e a Mineração</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Extraindo da natureza</h3>
+      <p>Minérios são rochas ou minerais com valor econômico. Extraímos eles das jazidas através da mineração. Essa atividade precisa de cuidado, pois pode causar poluição e destruir o ambiente.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.4 Tipos de Rochas - pagina34 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Tipos de Rochas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Ígneas, Sedimentares e Metamórficas</h3>
+      <p>Rochas ígneas se formam do magma. Se esfriam rápido, são vulcânicas (como o basalto); se devagar, são plutônicas (como o granito). Rochas sedimentares vêm de fragmentos de outras rochas (como arenito). Rochas metamórficas são formadas com calor e pressão (como o mármore).</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.5 Fósseis nas Rochas - pagina35 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Fósseis nas Rochas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Vestígios do passado</h3>
+      <p>Fósseis são restos de seres vivos ou marcas deixadas por eles, preservados nas rochas sedimentares. Eles ajudam a contar a história da vida na Terra e entender os ambientes do passado.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.6 O Solo - pagina36 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O Solo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Base da vida terrestre</h3>
+      <p>O solo é a parte da crosta formada por minerais, água, ar e matéria orgânica. Ele é essencial para o crescimento das plantas e para a vida de muitos organismos. Seu cuidado é fundamental para o meio ambiente.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.7 Formação do Solo - pagina37 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Formação do Solo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como o solo se forma</h3>
+      <p>O solo vem da decomposição das rochas, um processo chamado intemperismo. Isso acontece por ação do clima, da água, das raízes e dos microrganismos. Leva milhares de anos para se formar.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.8 Intemperismo - pagina38 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Intemperismo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Transformando as rochas</h3>
+      <p>O intemperismo pode ser físico (quebra por calor, frio e vento), químico (reação com água e ar) ou biológico (ação de raízes e organismos). Ele é essencial para criar o solo e moldar paisagens.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.9 Uso do Solo - pagina39 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Uso do Solo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como usamos o solo</h3>
+      <p>O solo é usado na agricultura, na criação de animais, nas construções e no extrativismo. Cada tipo de uso pode afetar o solo de forma diferente. É importante cuidar para evitar a degradação.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 4 – 4.10 Conservação do Solo - pagina40 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Conservação do Solo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Preservar para o futuro</h3>
+      <p>Evitar o desmatamento, usar técnicas sustentáveis e manter a vegetação ajudam a conservar o solo. Assim garantimos alimento e qualidade de vida para as futuras gerações.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========Unidade 5 ====== -->
+
+<!-- Unidade 5 – 5.1 Olhando para o céu - pagina41 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Olhando para o céu</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>O céu nos ensina muito</h3>
+      <p>Desde os tempos antigos, os seres humanos observam o céu para entender o tempo, se localizar e criar calendários. Observar o céu é também uma forma de aprender sobre o Universo e os corpos celestes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.2 O Sol - pagina42 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O Sol</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Fonte de luz e calor</h3>
+      <p>O Sol é a estrela mais próxima da Terra. Ele ilumina, aquece e possibilita a vida no planeta. Também influencia o clima, o crescimento das plantas e o ritmo da natureza.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.3 A Terra e seus movimentos - pagina43 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A Terra e seus movimentos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Rotação e translação</h3>
+      <p>A Terra gira em torno de si mesma (rotação), o que forma os dias e noites. Ela também gira ao redor do Sol (translação), formando os anos e as estações do ano.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.4 As estações do ano - pagina44 -->
+<div class="page">
+  <div class="page-header">
+    <h1>As estações do ano</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Verão, outono, inverno e primavera</h3>
+      <p>As estações acontecem por causa da inclinação da Terra e sua translação. Cada estação tem características próprias de temperatura, clima e duração do dia.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.5 A Lua - pagina45 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A Lua</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>O satélite da Terra</h3>
+      <p>A Lua é o corpo celeste mais próximo da Terra. Ela reflete a luz do Sol e influencia as marés. Sua posição em relação ao Sol e à Terra muda sua aparência no céu.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.6 Fases da Lua - pagina46 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Fases da Lua</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Nova, crescente, cheia e minguante</h3>
+      <p>As fases da Lua dependem da posição entre Sol, Terra e Lua. Mudam a cada semana e afetam a observação no céu. São importantes para calendários e atividades humanas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.7 Outros astros - pagina47 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Outros astros</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Planetas, estrelas e cometas</h3>
+      <p>Além do Sol e da Lua, vemos no céu planetas, estrelas, cometas e meteoros. Cada um tem características e trajetórias próprias no espaço.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.8 Instrumentos de observação - pagina48 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Instrumentos de observação</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Ver mais longe e melhor</h3>
+      <p>Binóculos, lunetas e telescópios ajudam a observar o céu. Com eles, conseguimos ver detalhes da Lua, planetas distantes e até galáxias.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.9 Curiosidades do Universo - pagina49 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Curiosidades do Universo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Fatos incríveis sobre o espaço</h3>
+      <p>Sabia que existem bilhões de estrelas? E que um dia em Vênus é maior que um ano? O Universo é cheio de curiosidades que nos fazem imaginar e querer aprender mais.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 5 – 5.10 Vida fora da Terra - pagina50 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Vida fora da Terra</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Existe vida em outros planetas?</h3>
+      <p>Os cientistas estudam se há vida em outros planetas. Ainda não há provas, mas há muitos planetas parecidos com a Terra. A busca continua!</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========Unidade 6 ====== -->
+
+<!-- Unidade 6 – 6.1 O que são materiais - pagina51 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O que são materiais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Tudo ao nosso redor</h3>
+      <p>Materiais são tudo aquilo que usamos para fabricar objetos. Podem ser naturais, como madeira e algodão, ou artificiais, como plástico e vidro. Eles estão presentes em nosso dia a dia.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.2 Propriedades dos materiais - pagina52 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Propriedades dos materiais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como os materiais se comportam</h3>
+      <p>Cada material tem características próprias, como dureza, elasticidade, transparência, cor e textura. Essas propriedades definem como ele será usado na fabricação de objetos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.3 Materiais naturais e artificiais - pagina53 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Materiais naturais e artificiais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>De onde vêm os materiais?</h3>
+      <p>Materiais naturais vêm da natureza, como madeira, algodão e pedra. Já os artificiais são produzidos pelas pessoas, como plástico, vidro e tecidos sintéticos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.4 Estados físicos da matéria - pagina54 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Estados físicos da matéria</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Sólido, líquido e gasoso</h3>
+      <p>Os materiais podem estar em três estados físicos: sólido (com forma própria), líquido (se adapta ao recipiente) e gasoso (sem forma nem volume fixo).</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.5 Mudanças de estado físico - pagina55 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Mudanças de estado físico</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Transformações da matéria</h3>
+      <p>Os materiais mudam de estado físico com a temperatura: derretem, evaporam, condensam ou congelam. Essas mudanças fazem parte do nosso cotidiano.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.6 Misturas - pagina56 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Misturas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Quando materiais se juntam</h3>
+      <p>Misturas acontecem quando combinamos dois ou mais materiais. Elas podem ser homogêneas (como água com sal) ou heterogêneas (como água e óleo).</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.7 Separação de misturas - pagina57 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Separação de misturas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como separar os materiais</h3>
+      <p>Existem técnicas para separar misturas, como filtração, decantação e peneiração. Elas são usadas no dia a dia e na indústria para recuperar os materiais.</p>
+    </div>
+
+<div class="highlight-box">
+                        <h4>🎮 Teste seus conhecimentos!</h4>
+                        <p>Agora que você aprendeu sobre separação de misturas, que tal testar seus conhecimentos com nosso jogo interativo? Escolha o método correto para separar cada mistura!</p>
+					</div>
+	<div style="height: 115vh;">
+                 <iframe src="https://ibmxu.github.io/guia/jogos/separacao_mistura.html"  style= " border: none; overflow:hidden; width: 100%; height: 100%; " scrolling="no" ></iframe>
+                </div>
+	  
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.8 Transformações dos materiais - pagina58 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Transformações dos materiais</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Físicas e químicas</h3>
+      <p>Os materiais podem passar por transformações físicas (sem mudar a substância) ou químicas (formando novas substâncias), como quando a madeira queima e vira cinza.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.9 Sustentabilidade e reciclagem - pagina59 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Sustentabilidade e reciclagem</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Reutilizar e preservar</h3>
+      <p>Reciclar é transformar materiais usados em novos produtos. Separar o lixo e reaproveitar materiais ajuda o meio ambiente e evita o desperdício.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 6 – 6.10 Materiais e o meio ambiente - pagina60 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Materiais e o meio ambiente</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Impactos e cuidados</h3>
+      <p>Alguns materiais demoram muito para se decompor. Precisamos escolher bem o que usamos e evitar poluição. Assim, protegemos a natureza e a saúde das pessoas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==========Unidade 7 ====== -->
+
+<!-- Unidade 7 – 7.1 O que é vida - pagina61 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O que é vida</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Características dos seres vivos</h3>
+      <p>Seres vivos nascem, crescem, se reproduzem e morrem. Eles reagem ao ambiente, se alimentam e têm células. Tudo isso faz parte do que chamamos de vida.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.2 A célula - pagina62 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A célula</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Unidade básica da vida</h3>
+      <p>As células são as menores partes dos seres vivos. Existem seres formados por uma só célula (unicelulares) e outros por muitas (multicelulares), como os seres humanos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.3 Estrutura da célula - pagina64 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Estrutura da célula</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Partes principais</h3>
+      <p>As células animais e vegetais possuem estruturas comuns, como a membrana plasmática, citoplasma, núcleo e organelas como as mitocôndrias, que produzem energia. Porém, também apresentam estruturas especiais como parede celular, cloroplastos e um grande vacúolo central. Já a célula animal não possui esses elementos, mas conta com os centríolos, importantes na divisão celular.</p>
+    </div>
+	
+<div class="barra-lupa"> Veja abaixo as principais estruturas de uma celula animal e posteiormente a de uma celula vegetal</div>
+	
+				<div style="height: 120vh;">
+                 <iframe src="https://ibmxu.github.io/guia/hotspot_imagem/celula_animal.html" style="width: 100%; height: 100%; border: none;"></iframe>
+                </div>
+				
+					
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.4 Tipos de células - pagina63 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Células Eucarióticas e Procarióticas </h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Procariontes e eucariontes</h3>
+      <p>Células procariontes são simples e sem núcleo definido, como as bactérias. Células eucariontes têm núcleo e são mais organizadas, como as das plantas e animais.</p>
+    </div>
+  </div>
+</div>
+		
+<!-- Unidade 7 – 7.5 Tecidos e órgãos - pagina65 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Tecidos e órgãos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Organização do corpo</h3>
+      <p>Células iguais formam tecidos. Tecidos formam órgãos, como o coração e os pulmões. Juntos, eles fazem o corpo funcionar.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.6 O sistema nervoso - pagina66 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O sistema nervoso</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Coordenação do corpo</h3>
+      <p>O sistema nervoso comanda o corpo. Ele é formado pelo cérebro, medula espinhal e nervos. Recebe informações e envia comandos para nossas ações.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.7 Cérebro, medula e nervos - pagina67 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Cérebro, medula e nervos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Partes do sistema nervoso</h3>
+      <p>O cérebro é o centro do pensamento. A medula transmite os sinais. Os nervos conectam tudo. Juntos, eles controlam nosso corpo e reações.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.8 Estímulos e respostas - pagina68 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Estímulos e respostas</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como o corpo reage</h3>
+      <p>O corpo sente estímulos como luz, som ou dor e responde a eles. Isso acontece graças ao sistema nervoso, que interpreta e age rapidamente.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.9 Os cinco sentidos - pagina69 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Os cinco sentidos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Visão, audição, olfato, tato e paladar</h3>
+      <p>São os sentidos que usamos para perceber o mundo. Eles mandam sinais ao cérebro, que interpreta tudo o que vemos, ouvimos, sentimos e saboreamos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 7 – 7.10 Cuidados com o sistema nervoso - pagina70 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Cuidados com o sistema nervoso</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Saúde do corpo e da mente</h3>
+      <p>Boa alimentação, sono adequado e evitar o uso de drogas ajudam a manter o sistema nervoso saudável. Atividades como leitura e jogos também fazem bem para o cérebro.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========Unidade 8 ====== -->
+
+<!-- Unidade 8 – 8.1 Os sentidos do corpo - pagina71 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Os sentidos do corpo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Como percebemos o mundo</h3>
+      <p>Nosso corpo tem cinco sentidos: visão, audição, tato, paladar e olfato. Eles nos ajudam a sentir o ambiente e reagir ao que acontece ao nosso redor.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.2 A visão - pagina72 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A visão</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Ver o que está ao redor</h3>
+      <p>O sentido da visão permite enxergar formas, cores e movimentos. Os olhos captam a luz e o cérebro interpreta as imagens.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.3 A audição - pagina73 -->
+<div class="page">
+  <div class="page-header">
+    <h1>A audição</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Ouvir sons e ruídos</h3>
+      <p>O ouvido capta os sons e envia sinais ao cérebro. A audição nos ajuda a nos comunicar, ouvir músicas e perceber perigos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.4 O tato - pagina74 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O tato</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Sentir com a pele</h3>
+      <p>O tato está na pele e permite sentir pressão, temperatura, dor e textura. É essencial para proteção e para interagir com objetos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.5 O paladar - pagina75 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O paladar</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Sentir os sabores</h3>
+      <p>A língua tem papilas gustativas que detectam sabores como doce, salgado, azedo, amargo e umami. O paladar está ligado ao olfato.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.6 O olfato - pagina76 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O olfato</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Sentir os cheiros</h3>
+      <p>O nariz capta partículas do ar com cheiros. O olfato ajuda a identificar alimentos, perigos e até lembrar de situações passadas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.7 O sistema locomotor - pagina77 -->
+<div class="page">
+  <div class="page-header">
+    <h1>O sistema locomotor</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Movimento do corpo</h3>
+      <p>O sistema locomotor é formado por ossos, músculos e articulações. Ele permite que o corpo se mova, ande, pule e corra.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.8 Os músculos - pagina78 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Os músculos</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Força e movimento</h3>
+      <p>Os músculos se contraem e relaxam para mover os ossos. Eles trabalham em pares e são essenciais para qualquer ação do corpo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.9 As articulações - pagina79 -->
+<div class="page">
+  <div class="page-header">
+    <h1>As articulações</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Conexões móveis</h3>
+      <p>As articulações ligam os ossos e permitem os movimentos. Joelhos, cotovelos e ombros são exemplos importantes no corpo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Unidade 8 – 8.10 Cuidando do corpo - pagina80 -->
+<div class="page">
+  <div class="page-header">
+    <h1>Cuidando do corpo</h1>
+  </div>
+  <div class="page-content">
+    <div class="text-box">
+      <h3>Saúde e prevenção</h3>
+      <p>Para manter os sentidos e os movimentos saudáveis, é importante dormir bem, praticar exercícios, comer de forma equilibrada e evitar acidentes.</p>
+    </div>
+  </div>
+</div>
+
+		
+    </div>
+ <div class="navigation">
+    <button class="nav-btn" id="prevBtn" onclick="changePage(-1)">← Anterior</button>
+    <button class="home-btn" onclick="goToHome()" title="Ir para o início"></button>
+    <button class="nav-btn" id="nextBtn" onclick="changePage(1)">Próxima →</button>
+</div>
+	
+	
+<!-- Scripts-->
+ 
+<script src="https://ibmxu.github.io/guia/animacaoTopo.js"></script>
+<script src="https://ibmxu.github.io/guia/animacaoInicial.js"></script>
+<script src="https://ibmxu.github.io/guia/sumario.js"></script>
+<script src="https://ibmxu.github.io/guia/jsteste/navegaID.js"></script>
+<script src="https://ibmxu.github.io/guia/scriptvideo.js"></script>
+
+</body>
+</html>
