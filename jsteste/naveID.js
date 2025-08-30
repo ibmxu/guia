@@ -1,13 +1,9 @@
 // === SISTEMA HÍBRIDO: HASH + PAGINAÇÃO EXISTENTE ===
-// Este código funciona JUNTO com seu sistema atual sem interferir
+// Versão corrigida e simplificada
 
-// === NAVEGAÇÃO DE PÁGINAS E LOCAL STORAGE (SEU CÓDIGO ORIGINAL) ===
 let currentPage = 0;
 let totalPages = 0;
 let isInitialized = false;
-
-// NOVA: Flag para evitar loops infinitos
-let isNavigating = false;
 
 // Função para pausar todos os vídeos da página atual
 function pauseAllVideosOnCurrentPage() {
@@ -22,10 +18,7 @@ function pauseAllVideosOnCurrentPage() {
         const iframe = container.querySelector('.youtube-player');
         if (iframe && iframe.contentWindow) {
             try {
-                // CORREÇÃO: Aguardar um pouco antes de enviar comando
-                setTimeout(() => {
-                    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-                }, 100);
+                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
             } catch (e) {
                 console.log('Erro ao pausar vídeo via postMessage:', e);
             }
@@ -36,11 +29,8 @@ function pauseAllVideosOnCurrentPage() {
         if (playerId && window.YT && window.YT.get) {
             try {
                 const player = window.YT.get(playerId);
-                if (player && typeof player.pauseVideo === 'function') {
-                    // CORREÇÃO: Verificar se o player está pronto
-                    if (player.getPlayerState && player.getPlayerState() !== -1) {
-                        player.pauseVideo();
-                    }
+                if (player && player.pauseVideo) {
+                    player.pauseVideo();
                 }
             } catch (e) {
                 console.log('Erro ao pausar vídeo via YT API:', e);
@@ -61,22 +51,20 @@ function initializePages() {
     const pages = document.querySelectorAll('.page');
     totalPages = pages.length;
     
-    // CORREÇÃO: Aguardar um pouco antes de verificar hash
-    setTimeout(() => {
-        if (!handleInitialHash()) {
-            loadLastPage();
-        }
-        
-        updateNavigation();
-        updateProgressBar();
-        isInitialized = true;
-        
-        // Atualizar hash inicial após inicialização
-        updateUrlHash();
-    }, 200);
+    // Verificar se existe hash na URL antes de carregar última página
+    if (!handleInitialHash()) {
+        loadLastPage();
+    }
+    
+    updateNavigation();
+    updateProgressBar();
+    isInitialized = true;
+    
+    // Atualizar hash inicial
+    updateUrlHash();
 }
 
-// === LOCAL STORAGE (SEU CÓDIGO ORIGINAL) ===
+// === LOCAL STORAGE ===
 function loadLastPage() {
     const savedPage = localStorage.getItem('guiaCiencias_ultimaPagina');
     if (savedPage !== null) {
@@ -94,11 +82,8 @@ function saveCurrentPage() {
     localStorage.setItem('guiaCiencias_ultimaPagina', currentPage.toString());
 }
 
-// === NAVEGAÇÃO (SEU CÓDIGO MODIFICADO PARA INCLUIR HASH) ===
+// === NAVEGAÇÃO ===
 function goToPage(pageNumber) {
-    if (isNavigating) return; // CORREÇÃO: Prevenir navegação múltipla
-    isNavigating = true;
-    
     // Pausar vídeos da página atual antes de sair
     pauseAllVideosOnCurrentPage();
     
@@ -110,17 +95,11 @@ function goToPage(pageNumber) {
     updateNavigation();
     updateProgressBar();
     
-    // CORREÇÃO: Aguardar antes de atualizar hash
-    setTimeout(() => {
-        updateUrlHash();
-        isNavigating = false;
-    }, 100);
+    // Atualizar hash da URL
+    updateUrlHash();
 }
 
 function changePage(direction) {
-    if (isNavigating) return; // CORREÇÃO: Prevenir navegação múltipla
-    isNavigating = true;
-    
     // Pausar vídeos da página atual antes de sair
     pauseAllVideosOnCurrentPage();
     
@@ -134,11 +113,8 @@ function changePage(direction) {
     updateNavigation();
     updateProgressBar();
     
-    // CORREÇÃO: Aguardar antes de atualizar hash
-    setTimeout(() => {
-        updateUrlHash();
-        isNavigating = false;
-    }, 100);
+    // Atualizar hash da URL
+    updateUrlHash();
 }
 
 function updateNavigation() {
@@ -158,9 +134,6 @@ function updateProgressBar() {
 }
 
 function goToHome() {
-    if (isNavigating) return; // CORREÇÃO: Prevenir navegação múltipla
-    isNavigating = true;
-    
     // Pausar vídeos da página atual antes de sair
     pauseAllVideosOnCurrentPage();
     
@@ -172,26 +145,21 @@ function goToHome() {
     updateNavigation();
     updateProgressBar();
     
-    // CORREÇÃO: Aguardar antes de atualizar hash
-    setTimeout(() => {
-        updateUrlHash();
-        isNavigating = false;
-    }, 100);
+    // Atualizar hash da URL
+    updateUrlHash();
 }
 
-// === NOVO: SISTEMA DE HASH/URL ===
+// === SISTEMA DE HASH/URL ===
 
 // Atualiza o hash da URL baseado na página atual
 function updateUrlHash() {
-    if (!isInitialized || isNavigating) return;
+    if (!isInitialized) return;
     
     const newHash = `#pagina${String(currentPage + 1).padStart(2, '0')}`;
     
-    // CORREÇÃO: Verificar se hash realmente mudou
+    // Atualizar URL sem recarregar a página
     if (window.location.hash !== newHash) {
-        // CORREÇÃO: Usar pushState em vez de replaceState para melhor controle
-        const url = window.location.href.split('#')[0] + newHash;
-        history.replaceState({ page: currentPage }, null, url);
+        history.replaceState(null, null, newHash);
     }
 }
 
@@ -226,17 +194,15 @@ function handleInitialHash() {
     return true;
 }
 
-// CORREÇÃO: Função melhorada para lidar com mudanças no hash
-function handleHashChange(e) {
-    if (!isInitialized || isNavigating) return;
+// Lida com mudanças no hash (botão voltar/avançar do navegador)
+function handleHashChange() {
+    if (!isInitialized) return;
     
     const hash = window.location.hash;
     const pageNum = hashToPageNumber(hash);
     
     if (pageNum !== null && pageNum !== currentPage) {
-        isNavigating = true;
-        
-        // Navegar para a página do hash sem atualizar a URL novamente
+        // Navegar para a página do hash
         pauseAllVideosOnCurrentPage();
         
         const pages = document.querySelectorAll('.page');
@@ -247,15 +213,10 @@ function handleHashChange(e) {
         saveCurrentPage();
         updateNavigation();
         updateProgressBar();
-        
-        setTimeout(() => {
-            isNavigating = false;
-        }, 100);
     }
 }
 
 // === FUNÇÃO PÚBLICA PARA LINKS EXTERNOS ===
-// Permite que links HTML naveguem para páginas específicas
 function goToPageByHash(hash) {
     const pageNum = hashToPageNumber(hash);
     if (pageNum !== null) {
@@ -263,10 +224,8 @@ function goToPageByHash(hash) {
     }
 }
 
-// === EVENT LISTENERS (SEU CÓDIGO ORIGINAL + NOVOS) ===
+// === EVENT LISTENERS ===
 document.addEventListener('keydown', function (e) {
-    if (isNavigating) return; // CORREÇÃO: Prevenir durante navegação
-    
     if (e.key === 'ArrowLeft' && currentPage > 0) changePage(-1);
     if (e.key === 'ArrowRight' && currentPage < totalPages - 1) changePage(1);
 });
@@ -279,8 +238,6 @@ document.addEventListener('touchstart', function (e) {
 });
 
 document.addEventListener('touchend', function (e) {
-    if (isNavigating) return; // CORREÇÃO: Prevenir durante navegação
-    
     const endX = e.changedTouches[0].clientX;
     const endY = e.changedTouches[0].clientY;
     const diffX = startX - endX;
@@ -291,33 +248,15 @@ document.addEventListener('touchend', function (e) {
     }
 });
 
-// CORREÇÃO: Event listener melhorado para mudanças no hash
-window.addEventListener('hashchange', handleHashChange, { passive: true });
+// Event listener para mudanças no hash
+window.addEventListener('hashchange', handleHashChange);
 
-// CORREÇÃO: Inicialização mais robusta
-document.addEventListener('DOMContentLoaded', function() {
-    // Aguardar um pouco para garantir que tudo carregou
-    setTimeout(initializePages, 100);
-});
-
+document.addEventListener('DOMContentLoaded', initializePages);
 window.addEventListener('load', () => {
-    if (totalPages === 0) {
-        setTimeout(initializePages, 200);
-    }
+    if (totalPages === 0) initializePages();
 });
 
-// CORREÇÃO: Aguardar YouTube API se estiver sendo usada
-if (window.YT) {
-    window.addEventListener('load', function() {
-        setTimeout(() => {
-            if (window.YT.loaded) {
-                initializePages();
-            }
-        }, 500);
-    });
-}
-
-// === FUNÇÕES DE UTILIDADE EXTRAS ===
+// === FUNÇÕES DE UTILIDADE ===
 
 // Gera URLs compartilháveis para páginas específicas
 function getShareableUrl(pageNumber) {
@@ -333,15 +272,6 @@ function debugNavigation() {
         totalPages: totalPages,
         currentHash: window.location.hash,
         shareableUrl: getShareableUrl(currentPage),
-        isInitialized: isInitialized,
-        isNavigating: isNavigating
+        isInitialized: isInitialized
     });
-}
-
-// NOVA: Função para reinicializar se houver problemas
-function reinitializeIfNeeded() {
-    if (!isInitialized || totalPages === 0) {
-        console.log('Reinicializando navegação...');
-        initializePages();
-    }
 }
