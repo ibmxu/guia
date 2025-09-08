@@ -150,7 +150,7 @@ function goToHome() {
 function updateUrlHash() {
     if (!isInitialized) return;
     
-    const newHash = `#pagina${String(currentPage + 1).padStart(2, '0')}`;
+    const newHash = `#pagina${String(currentPage).padStart(2, '0')}`;
     
     if (window.location.hash !== newHash) {
         history.replaceState(null, null, newHash);
@@ -161,7 +161,7 @@ function hashToPageNumber(hash) {
     if (!hash || !hash.startsWith('#pagina')) return null;
     
     const pageStr = hash.replace('#pagina', '');
-    const pageNum = parseInt(pageStr) - 1;
+    const pageNum = parseInt(pageStr);
     
     return (pageNum >= 0 && pageNum < totalPages) ? pageNum : null;
 }
@@ -247,7 +247,7 @@ window.addEventListener('load', () => {
 
 function getShareableUrl(pageNumber) {
     const baseUrl = window.location.href.split('#')[0];
-    const hash = `#pagina${String(pageNumber + 1).padStart(2, '0')}`;
+   const hash = `#pagina${String(pageNumber).padStart(2, '0')}`;
     return baseUrl + hash;
 }
 
