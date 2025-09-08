@@ -1,26 +1,54 @@
+/ ===========================================================================================
+// === SCRIPT 2: PLAYER DE VÍDEO INTERATIVO (VERSÃO PARA SUA ESTRUTURA HTML) ===
+// ===========================================================================================
+
 class InteractiveVideoPlayer {
     constructor(container) {
         this.container = container;
         this.player = null;
         this.questionShown = false;
         this.videoEnded = false;
-        this.isDestroyed = false; // NOVO: flag para evitar operações após destruição
-        this.timeCheckInterval = null; // NOVO: referência para o interval
+        this.isDestroyed = false;
+        this.timeCheckInterval = null;
+        this.retryCount = 0;
+        this.maxRetries = 3;
         
-        // Ler configurações dos data attributes
+        // Verificar se container é válido
+        if (!container || !container.dataset) {
+            console.error('Container inválido para player de vídeo');
+            return;
+        }
+        
+        // Ler configurações com valores padrão
         this.config = {
-            videoId: container.dataset.videoId,
-            questionTime: parseInt(container.dataset.questionTime),
-            question: container.dataset.question,
-            options: JSON.parse(container.dataset.options),
-            feedback: container.dataset.feedback
+            videoId: container.dataset.videoId || '',
+            questionTime: parseInt(container.dataset.questionTime) || 30,
+            question: container.dataset.question || 'Pergunta não definida',
+            options: this.parseOptions(container.dataset.options),
+            feedback: container.dataset.feedback || 'Feedback não definido'
         };
+        
+        // Validar videoId
+        if (!this.config.videoId) {
+            console.error('Video ID não encontrado');
+            this.showError('ID do vídeo não encontrado');
+            return;
+        }
         
         this.init();
     }
     
+    parseOptions(optionsData) {
+        try {
+            if (!optionsData) return ['Opção 1', 'Opção 2'];
+            return JSON.parse(optionsData);
+        } catch (e) {
+            console.error('Erro ao parsear opções:', e);
+            return ['Opção 1', 'Opção 2'];
+        }
+    }
+    
     init() {
-        // Encontrar elementos específicos deste player
         this.elements = {
             iframe: this.container.querySelector('.youtube-player'),
             overlay: this.container.querySelector('.question-overlay'),
@@ -31,20 +59,25 @@ class InteractiveVideoPlayer {
             status: this.container.querySelector('.video-status')
         };
         
-        // CORREÇÃO: Verificar se elementos existem
         if (!this.elements.iframe) {
             console.error('Player iframe não encontrado');
+            this.showError('Player não encontrado');
             return;
         }
         
-        // Gerar ID único para o iframe
-        const uniqueId = 'player_' + Math.random().toString(36).substr(2, 9);
+        // Gerar ID único para o iframe existente
+        const uniqueId = 'player_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         this.elements.iframe.id = uniqueId;
         
-        // Configurar pergunta e opções
-        this.setupQuestion();
+        // CORREÇÃO: Atualizar o src do iframe existente para incluir parâmetros necessários
+        const currentSrc = this.elements.iframe.src;
+        const newSrc = this.buildOptimizedSrc();
         
-        // CORREÇÃO: Aguardar API do YouTube estar pronta com timeout
+        if (currentSrc !== newSrc) {
+            this.elements.iframe.src = newSrc;
+        }
+        
+        this.setupQuestion();
         this.waitForYouTubeAPI(() => {
             if (!this.isDestroyed) {
                 this.initPlayer(uniqueId);
@@ -52,14 +85,39 @@ class InteractiveVideoPlayer {
         });
     }
     
+    // NOVO: Construir URL otimizada para o iframe
+    buildOptimizedSrc() {
+        const baseParams = {
+            enablejsapi: 1,
+            origin: window.location.origin,
+            rel: 0,
+            modestbranding: 1,
+            iv_load_policy: 3,
+            playsinline: 1
+        };
+        
+        const paramString = Object.entries(baseParams)
+            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+            .join('&');
+            
+        return `https://www.youtube.com/embed/${this.config.videoId}?${paramString}`;
+    }
+    
+    showError(message) {
+        this.updateStatus(`Erro: ${message}`);
+        if (this.elements.iframe) {
+            this.elements.iframe.style.display = 'none';
+        }
+    }
+    
     waitForYouTubeAPI(callback, attempts = 0) {
-        // CORREÇÃO: Limite de tentativas para evitar loop infinito
-        if (attempts > 100) { // 10 segundos máximo
-            console.error('YouTube API não carregou a tempo');
+        if (attempts > 150) { // 15 segundos máximo
+            console.error('YouTube API não carregou');
+            this.showError('API do YouTube não carregou');
             return;
         }
         
-        if (window.YT && window.YT.Player) {
+        if (window.YT && window.YT.Player && typeof window.YT.Player === 'function') {
             callback();
         } else {
             setTimeout(() => this.waitForYouTubeAPI(callback, attempts + 1), 100);
@@ -67,59 +125,98 @@ class InteractiveVideoPlayer {
     }
     
     initPlayer(playerId) {
-        // CORREÇÃO: Verificar se o container ainda existe
         if (this.isDestroyed || !document.getElementById(playerId)) {
             return;
         }
         
         try {
+            // CORREÇÃO: Usar iframe existente com API do YouTube
             this.player = new YT.Player(playerId, {
                 events: {
                     'onReady': (event) => this.onPlayerReady(event),
                     'onStateChange': (event) => this.onPlayerStateChange(event),
-                    'onError': (event) => this.onPlayerError(event) // NOVO: tratamento de erro
+                    'onError': (event) => this.onPlayerError(event)
                 }
             });
         } catch (error) {
             console.error('Erro ao criar player:', error);
+            this.handlePlayerCreationError(playerId);
         }
     }
     
-    // NOVO: Tratamento de erros do player
-    onPlayerError(event) {
-        console.error('Erro no player YouTube:', event.data);
-        this.updateStatus('Erro ao carregar vídeo');
-        
-        // Tentar recriar o player após erro
-        setTimeout(() => {
-            if (!this.isDestroyed) {
-                this.recreatePlayer();
-            }
-        }, 2000);
+    handlePlayerCreationError(playerId) {
+        this.retryCount++;
+        if (this.retryCount < this.maxRetries) {
+            console.log(`Tentativa ${this.retryCount} de recriar player`);
+            setTimeout(() => {
+                if (!this.isDestroyed) {
+                    this.recreatePlayer();
+                }
+            }, 1000 * this.retryCount);
+        } else {
+            this.showError('Não foi possível carregar o player');
+        }
     }
     
-    // NOVO: Recriar player em caso de erro
+    onPlayerError(event) {
+        console.error('Erro no player YouTube:', event.data);
+        
+        const errorMessages = {
+            2: 'ID do vídeo inválido',
+            5: 'Erro de reprodução HTML5',
+            100: 'Vídeo não encontrado',
+            101: 'Reprodução não permitida',
+            150: 'Reprodução não permitida',
+            153: 'Erro de configuração do player'
+        };
+        
+        const message = errorMessages[event.data] || `Erro desconhecido (${event.data})`;
+        this.showError(message);
+        
+        // Tentar recriar apenas para alguns tipos de erro
+        if ([2, 5, 100, 153].includes(event.data) && this.retryCount < this.maxRetries) {
+            setTimeout(() => {
+                if (!this.isDestroyed) {
+                    this.recreatePlayer();
+                }
+            }, 2000);
+        }
+    }
+    
     recreatePlayer() {
+        this.retryCount++;
+        
         try {
-            if (this.player && this.player.destroy) {
+            if (this.player && typeof this.player.destroy === 'function') {
                 this.player.destroy();
             }
         } catch (e) {
-            console.log('Erro ao destruir player:', e);
+            console.log('Erro ao destruir player anterior:', e);
         }
         
-        // Aguardar um pouco antes de recriar
         setTimeout(() => {
-            if (!this.isDestroyed) {
-                const uniqueId = 'player_' + Math.random().toString(36).substr(2, 9);
-                this.elements.iframe.id = uniqueId;
+            if (!this.isDestroyed && this.retryCount < this.maxRetries) {
+                // CORREÇÃO: Recriar iframe mantendo a estrutura HTML
+                const videoWrapper = this.elements.iframe.parentElement;
+                const newIframe = document.createElement('iframe');
+                
+                newIframe.className = 'youtube-player';
+                newIframe.setAttribute('allowfullscreen', '');
+                
+                const uniqueId = 'player_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                newIframe.id = uniqueId;
+                newIframe.src = this.buildOptimizedSrc();
+                
+                // Substituir iframe mantendo posição na estrutura
+                videoWrapper.replaceChild(newIframe, this.elements.iframe);
+                this.elements.iframe = newIframe;
+                
                 this.initPlayer(uniqueId);
             }
         }, 500);
     }
     
     setupQuestion() {
-        // CORREÇÃO: Verificar se elementos existem antes de usar
         if (this.elements.questionTitle) {
             this.elements.questionTitle.textContent = this.config.question;
         }
@@ -130,7 +227,6 @@ class InteractiveVideoPlayer {
         
         if (!this.elements.optionsContainer) return;
         
-        // Criar opções
         this.elements.optionsContainer.innerHTML = '';
         this.config.options.forEach((optionText, index) => {
             const optionElement = document.createElement('div');
@@ -148,14 +244,14 @@ class InteractiveVideoPlayer {
         if (this.isDestroyed) return;
         
         this.updateStatus('Vídeo carregado. Clique em play!');
+        this.retryCount = 0;
         
-        // CORREÇÃO: Verificar se player e método existem
         try {
             if (this.player && typeof this.player.setPlaybackQuality === 'function') {
-                this.player.setPlaybackQuality('hd1080');
+                this.player.setPlaybackQuality('hd720');
             }
         } catch (error) {
-            console.log('Erro ao definir qualidade:', error);
+            console.log('Aviso: não foi possível definir qualidade:', error);
         }
     }
     
@@ -163,16 +259,19 @@ class InteractiveVideoPlayer {
         if (this.isDestroyed) return;
         
         try {
-            if (event.data == YT.PlayerState.PLAYING) {
+            if (event.data === YT.PlayerState.PLAYING) {
                 this.startTimeCheck();
                 this.updateStatus('Reproduzindo...');
-            } else if (event.data == YT.PlayerState.PAUSED && !this.questionShown) {
+            } else if (event.data === YT.PlayerState.PAUSED && !this.questionShown) {
                 this.updateStatus('Pausado');
-            } else if (event.data == YT.PlayerState.ENDED) {
+                this.clearTimeCheck();
+            } else if (event.data === YT.PlayerState.ENDED) {
                 this.videoEnded = true;
                 this.updateStatus('Concluído!');
                 this.updateProgress(100);
-                this.clearTimeCheck(); // NOVO: limpar interval
+                this.clearTimeCheck();
+            } else if (event.data === YT.PlayerState.BUFFERING) {
+                this.updateStatus('Carregando...');
             }
         } catch (error) {
             console.error('Erro no state change:', error);
@@ -180,7 +279,6 @@ class InteractiveVideoPlayer {
     }
     
     startTimeCheck() {
-        // CORREÇÃO: Limpar interval anterior se existir
         this.clearTimeCheck();
         
         this.timeCheckInterval = setInterval(() => {
@@ -190,35 +288,32 @@ class InteractiveVideoPlayer {
             }
             
             try {
-                if (this.player && typeof this.player.getCurrentTime === 'function') {
-                    const currentTime = this.player.getCurrentTime();
-                    const duration = this.player.getDuration();
-                    
-                    if (duration > 0) {
-                        const progress = (currentTime / duration) * 100;
-                        this.updateProgress(progress);
-                    }
-                    
-                    if (!this.questionShown && currentTime >= this.config.questionTime) {
-                        this.showQuestion();
-                        this.clearTimeCheck();
-                    }
-                    
-                    if (this.videoEnded) {
-                        this.clearTimeCheck();
-                    }
-                } else {
-                    // Player não está disponível, parar verificação
+                if (!this.player || typeof this.player.getCurrentTime !== 'function') {
+                    return;
+                }
+                
+                const currentTime = this.player.getCurrentTime();
+                const duration = this.player.getDuration();
+                
+                if (duration > 0) {
+                    const progress = (currentTime / duration) * 100;
+                    this.updateProgress(progress);
+                }
+                
+                if (!this.questionShown && currentTime >= this.config.questionTime && currentTime > 0) {
+                    this.showQuestion();
+                }
+                
+                if (this.videoEnded) {
                     this.clearTimeCheck();
                 }
             } catch (error) {
                 console.error('Erro na verificação de tempo:', error);
                 this.clearTimeCheck();
             }
-        }, 100);
+        }, 250);
     }
     
-    // NOVO: Método para limpar interval
     clearTimeCheck() {
         if (this.timeCheckInterval) {
             clearInterval(this.timeCheckInterval);
@@ -227,10 +322,12 @@ class InteractiveVideoPlayer {
     }
     
     showQuestion() {
-        if (this.isDestroyed) return;
+        if (this.isDestroyed || this.questionShown) return;
         
         try {
             this.questionShown = true;
+            this.clearTimeCheck();
+            
             if (this.player && typeof this.player.pauseVideo === 'function') {
                 this.player.pauseVideo();
             }
@@ -250,10 +347,14 @@ class InteractiveVideoPlayer {
             if (this.elements.overlay) {
                 this.elements.overlay.style.display = 'none';
             }
-            if (this.player && typeof this.player.playVideo === 'function') {
-                this.player.playVideo();
-            }
-            this.updateStatus('Continuando...');
+            
+            setTimeout(() => {
+                if (!this.isDestroyed && this.player && typeof this.player.playVideo === 'function') {
+                    this.player.playVideo();
+                    this.updateStatus('Continuando...');
+                    this.startTimeCheck();
+                }
+            }, 500);
         } catch (error) {
             console.error('Erro ao esconder pergunta:', error);
         }
@@ -263,12 +364,10 @@ class InteractiveVideoPlayer {
         if (this.isDestroyed) return;
         
         try {
-            // Mostrar feedback
             if (this.elements.feedback) {
                 this.elements.feedback.style.display = 'block';
             }
             
-            // Destacar opção selecionada
             const options = this.container.querySelectorAll('.option');
             options.forEach(opt => {
                 opt.style.background = '#f5f5f5';
@@ -278,12 +377,11 @@ class InteractiveVideoPlayer {
             clickedOption.style.background = '#4ade80';
             clickedOption.style.color = 'white';
             
-            // Continuar vídeo após 2 segundos
             setTimeout(() => {
                 if (!this.isDestroyed) {
                     this.hideQuestion();
                 }
-            }, 2000);
+            }, 2500);
         } catch (error) {
             console.error('Erro ao processar clique:', error);
         }
@@ -297,11 +395,10 @@ class InteractiveVideoPlayer {
     
     updateProgress(percentage) {
         if (this.elements.progressFill && !this.isDestroyed) {
-            this.elements.progressFill.style.width = percentage + '%';
+            this.elements.progressFill.style.width = Math.min(100, Math.max(0, percentage)) + '%';
         }
     }
     
-    // NOVO: Método para destruir player
     destroy() {
         this.isDestroyed = true;
         this.clearTimeCheck();
@@ -317,13 +414,14 @@ class InteractiveVideoPlayer {
         this.player = null;
     }
     
-    // NOVO: Método para pausar player de forma segura
     pauseSafely() {
         if (this.isDestroyed) return;
         
         try {
             if (this.player && typeof this.player.pauseVideo === 'function') {
-                this.player.pauseVideo();
+                if (this.player.getPlayerState && this.player.getPlayerState() !== YT.PlayerState.UNSTARTED) {
+                    this.player.pauseVideo();
+                }
             }
         } catch (error) {
             console.log('Erro ao pausar vídeo:', error);
@@ -331,22 +429,22 @@ class InteractiveVideoPlayer {
     }
 }
 
-// CORREÇÃO: Melhor controle de carregamento da API
+// === CONTROLE GLOBAL DOS PLAYERS ===
 let youtubeAPILoaded = false;
 let youtubeAPILoading = false;
+window.videoPlayers = window.videoPlayers || [];
 
 function loadYouTubeAPI() {
     if (youtubeAPILoaded || youtubeAPILoading) return;
     
     youtubeAPILoading = true;
     
-    // Verificar se já existe
     if (window.YT && window.YT.Player) {
         youtubeAPILoaded = true;
+        youtubeAPILoading = false;
         return;
     }
     
-    // Verificar se script já foi adicionado
     const existingScript = document.querySelector('script[src*="youtube.com/iframe_api"]');
     if (existingScript) {
         return;
@@ -354,9 +452,11 @@ function loadYouTubeAPI() {
     
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
+    tag.async = true;
     tag.onload = () => {
         youtubeAPILoaded = true;
         youtubeAPILoading = false;
+        console.log('YouTube API carregada com sucesso');
     };
     tag.onerror = () => {
         youtubeAPILoading = false;
@@ -367,59 +467,74 @@ function loadYouTubeAPI() {
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
-// NOVO: Armazenar instâncias dos players para controle
-window.videoPlayers = window.videoPlayers || [];
-
-// CORREÇÃO: Função para pausar todos os players de forma segura
-function pauseAllVideoPlayers() {
-    if (window.videoPlayers) {
+// Função global para pausar todos os players
+window.pauseAllVideoPlayers = function() {
+    if (window.videoPlayers && window.videoPlayers.length > 0) {
         window.videoPlayers.forEach(player => {
             if (player && typeof player.pauseSafely === 'function') {
                 player.pauseSafely();
             }
         });
     }
-}
+};
 
-// CORREÇÃO: Inicialização mais robusta
-document.addEventListener('DOMContentLoaded', function() {
-    // Carregar API do YouTube
-    loadYouTubeAPI();
+// Função para inicializar players
+window.initializeVideoPlayers = function() {
+    const videoContainers = document.querySelectorAll('.video-component');
     
-    // CORREÇÃO: Aguardar mais tempo e verificar se elementos existem
-    setTimeout(() => {
-        const videoContainers = document.querySelectorAll('.video-component');
-        
-        if (videoContainers.length === 0) {
-            console.log('Nenhum container de vídeo encontrado');
-            return;
-        }
-        
-        // Limpar players anteriores
-        if (window.videoPlayers) {
-            window.videoPlayers.forEach(player => {
-                if (player && typeof player.destroy === 'function') {
-                    player.destroy();
-                }
-            });
-        }
-        window.videoPlayers = [];
-        
-        // Criar novos players
-        videoContainers.forEach(container => {
-            try {
-                const player = new InteractiveVideoPlayer(container);
-                window.videoPlayers.push(player);
-            } catch (error) {
-                console.error('Erro ao criar player:', error);
+    if (videoContainers.length === 0) {
+        console.log('Nenhum container de vídeo encontrado');
+        return;
+    }
+    
+    // Limpar players anteriores
+    if (window.videoPlayers) {
+        window.videoPlayers.forEach(player => {
+            if (player && typeof player.destroy === 'function') {
+                player.destroy();
             }
         });
-    }, 1500); // CORREÇÃO: Tempo maior para garantir carregamento
+    }
+    window.videoPlayers = [];
+    
+    // Criar novos players
+    videoContainers.forEach(container => {
+        try {
+            const player = new InteractiveVideoPlayer(container);
+            if (player && !player.isDestroyed) {
+                window.videoPlayers.push(player);
+            }
+        } catch (error) {
+            console.error('Erro ao criar player:', error);
+        }
+    });
+    
+    console.log(`Inicializados ${window.videoPlayers.length} players de vídeo`);
+};
+
+// Inicialização principal
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM carregado, iniciando sistema...');
+    
+    // Carregar API do YouTube primeiro
+    loadYouTubeAPI();
+    
+    // Aguardar um tempo para garantir que tudo esteja carregado
+    setTimeout(() => {
+        window.initializeVideoPlayers();
+    }, 2000);
 });
 
-// NOVO: Callback global para YouTube API
+// Callback global obrigatório para YouTube API
 window.onYouTubeIframeAPIReady = function() {
     youtubeAPILoaded = true;
     youtubeAPILoading = false;
-    console.log('YouTube API carregada');
+    console.log('YouTube API pronta para uso');
+    
+    // Reinicializar players se já existirem containers
+    setTimeout(() => {
+        if (document.querySelectorAll('.video-component').length > 0) {
+            window.initializeVideoPlayers();
+        }
+    }, 500);
 };
