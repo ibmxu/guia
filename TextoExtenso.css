@@ -1,0 +1,513 @@
+/* ================================================
+           COMPONENTE PARA TEXTOS EXTENSOS - OTIMIZADO
+           ================================================ */
+.extensive-text-box {
+    background: #f8f9fa;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border-left: 3px solid #4CAF50;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    line-height: 1.6;
+    max-width: none;
+    /* Melhoria: scroll suave em overflow */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.extensive-text-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+}
+
+.extensive-text-box h3 {
+    color: #2c3e50;
+    margin-bottom: 12px;
+    font-size: 1.4em;
+    font-weight: bold;
+    line-height: 1.3;
+    /* Melhoria: quebra de linha em títulos longos */
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.extensive-text-box p {
+    color: #555;
+    font-size: 1em;
+    text-align: justify; /* Justificado apenas em desktop */
+    margin-bottom: 12px;
+    line-height: 1.6;
+    text-indent: 0;
+    /* Melhoria: melhor legibilidade */
+    word-spacing: 0.1em;
+    hyphens: auto;
+}
+
+.extensive-text-box p:first-of-type {
+    margin-top: 0;
+}
+
+.extensive-text-box p:last-of-type {
+    margin-bottom: 0;
+}
+
+.extensive-text-box h4 {
+    color: #2c3e50;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 16px 0 8px 0;
+    line-height: 1.4;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.extensive-text-box h5 {
+    color: #4CAF50;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 14px 0 6px 0;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.extensive-text-box ul,
+.extensive-text-box ol {
+    color: #555;
+    font-size: 1em;
+    line-height: 1.6;
+    margin: 8px 0;
+    padding-left: 24px;
+}
+
+.extensive-text-box li {
+    margin-bottom: 4px;
+    text-align: left; /* Lista sempre alinhada à esquerda */
+    /* Melhoria: quebra de linha em itens longos */
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.extensive-text-box blockquote {
+    background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+    border-left: 3px solid #4CAF50;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-style: italic;
+    color: #2e7d32;
+    border-radius: 0 6px 6px 0;
+    text-align: left; /* Citações sempre à esquerda para melhor leitura */
+    /* Melhoria: quebra de linha em citações */
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.extensive-text-box a {
+    color: #4CAF50;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+    /* Melhoria: quebra de links longos */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.extensive-text-box a:hover {
+    color: #2e7d32;
+}
+
+/* ================================================
+              RESPONSIVIDADE APRIMORADA
+   ================================================ */
+
+/* Tablets e telas médias */
+@media (max-width: 768px) {
+    .extensive-text-box {
+        padding: 12px 16px;
+        font-size: 0.95em;
+        /* Melhoria: remover hover em touch devices */
+        transform: none;
+    }
+    
+    .extensive-text-box:hover {
+        transform: none;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    
+    .extensive-text-box h3 {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+        line-height: 1.2;
+    }
+    
+    .extensive-text-box p {
+        font-size: 0.95em;
+        line-height: 1.5;
+        margin-bottom: 10px;
+        /* Melhoria: texto à esquerda em tablets para evitar espaçamentos ruins */
+        text-align: left;
+        word-spacing: normal;
+    }
+    
+    .extensive-text-box h4 {
+        font-size: 1.15em;
+        margin: 12px 0 6px 0;
+    }
+    
+    .extensive-text-box h5 {
+        margin: 10px 0 4px 0;
+        font-size: 1.05em;
+    }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+    .extensive-text-box {
+        padding: 10px 14px;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        /* Melhoria: sombra mais sutil em mobile */
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    
+    .extensive-text-box h3 {
+        font-size: 1.25em;
+        line-height: 1.2;
+        margin-bottom: 8px;
+        text-align: left;
+    }
+    
+    .extensive-text-box p {
+        /* Otimização: texto alinhado à esquerda para melhor leitura em mobile */
+        text-align: left;
+        line-height: 1.55; /* Aumentado para melhor legibilidade */
+        margin-bottom: 8px;
+        font-size: 0.9em;
+        word-spacing: normal;
+        /* Melhor espaçamento entre parágrafos */
+        margin-bottom: 10px;
+    }
+    
+    .extensive-text-box h4 {
+        font-size: 1.1em;
+        margin: 10px 0 4px 0;
+        text-align: left;
+    }
+    
+    .extensive-text-box h5 {
+        font-size: 1.05em;
+        margin: 8px 0 3px 0;
+        text-align: left;
+    }
+    
+    .extensive-text-box ul,
+    .extensive-text-box ol {
+        padding-left: 20px;
+        margin: 6px 0;
+        font-size: 0.9em;
+    }
+    
+    .extensive-text-box li {
+        text-align: left;
+        margin-bottom: 3px;
+        line-height: 1.5;
+    }
+    
+    .extensive-text-box blockquote {
+        padding: 10px 12px;
+        margin: 8px 0;
+        font-size: 0.9em;
+        border-radius: 0 4px 4px 0;
+        text-align: left;
+        line-height: 1.5;
+    }
+}
+
+/* Telas muito pequenas (< 360px) */
+@media (max-width: 359px) {
+    .extensive-text-box {
+        padding: 8px 12px;
+        margin-bottom: 10px;
+    }
+    
+    .extensive-text-box h3 {
+        font-size: 1.2em;
+        text-align: left;
+    }
+    
+    .extensive-text-box p,
+    .extensive-text-box li {
+        font-size: 0.85em;
+        line-height: 1.5; /* Melhor que 1.4 para legibilidade */
+        text-align: left; /* Sempre à esquerda em telas muito pequenas */
+        word-spacing: normal;
+    }
+    
+    .extensive-text-box ul,
+    .extensive-text-box ol {
+        padding-left: 16px;
+    }
+    
+    .extensive-text-box blockquote {
+        text-align: left;
+        line-height: 1.4;
+    }
+}
+
+/* ================================================
+              MELHORIAS DE ACESSIBILIDADE
+   ================================================ */
+
+/* Alto contraste para usuários com dificuldades visuais */
+@media (prefers-contrast: high) {
+    .extensive-text-box {
+        border-left-color: #2e7d32;
+        background: #ffffff;
+    }
+    
+    .extensive-text-box h3,
+    .extensive-text-box h4 {
+        color: #1a1a1a;
+    }
+    
+    .extensive-text-box p,
+    .extensive-text-box li {
+        color: #333;
+    }
+    
+    .extensive-text-box blockquote {
+        background: #f5f5f5;
+        color: #1a1a1a;
+    }
+}
+
+/* Redução de movimento para usuários sensíveis */
+@media (prefers-reduced-motion: reduce) {
+    .extensive-text-box {
+        transition: none;
+    }
+    
+    .extensive-text-box:hover {
+        transform: none;
+    }
+    
+    .extensive-text-box a {
+        transition: none;
+    }
+}
+
+/* ================================================
+              OTIMIZAÇÕES PARA LEITURA
+   ================================================ */
+
+/* Melhoria da legibilidade em diferentes tamanhos de fonte do sistema */
+@media (prefers-reduced-data: reduce) {
+    .extensive-text-box {
+        box-shadow: none;
+        background: #fafafa;
+    }
+    
+    .extensive-text-box:hover {
+        box-shadow: none;
+    }
+}
+
+/* ================================================
+                COMPONENTE DE IMAGENS DE PERFIL - COMPACTO
+   ================================================ */
+        .profile-card {
+            display: inline-block;
+            text-align: center;
+            margin: 6px 8px; /* Reduzido de 16px 12px */
+            vertical-align: top;
+            width: 160px;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .profile-image-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 4px auto; /* Reduzido de 0px para 4px */
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50, #2196F3, #FF9800, #E91E63);
+            padding: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .profile-image-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            background: linear-gradient(135deg, #66BB6A, #42A5F5, #FFB74D, #EC407A);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #fff;
+            border: 2px solid #ffffff;
+            transition: filter 0.3s ease;
+        }
+
+        .profile-image:hover {
+            filter: brightness(1.1);
+        }
+
+        .profile-title {
+            margin: 2px 0 1px 0; /* Reduzido de 4px 0 2px 0 */
+            font-size: 1em;
+            font-weight: bold;
+            line-height: 1.2;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .profile-link {
+            color: #2c3e50 !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 2px 0; /* Reduzido de 4px 0 */
+            border-radius: 4px;
+        }
+
+        .profile-link:hover {
+            color: #4CAF50 !important;
+            background: rgba(76, 175, 80, 0.08);
+            text-decoration: underline !important;
+            transform: translateY(-1px);
+        }
+
+        .profiles-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px; /* Reduzido de 8px */
+            margin: 8px 0; /* Reduzido de 16px 0 */
+            padding: 4px 0; /* Reduzido de 8px 0 */
+        }
+
+        /* Temas Perfil*/
+        .profile-card.theme-green .profile-image-container {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .profile-card.theme-green .profile-image-container:hover {
+            background: linear-gradient(135deg, #66BB6A, #9CCC65);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .profile-card.theme-blue .profile-image-container {
+            background: linear-gradient(135deg, #2196F3, #03A9F4);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+        }
+
+        .profile-card.theme-blue .profile-image-container:hover {
+            background: linear-gradient(135deg, #42A5F5, #29B6F6);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+
+        .profile-card.theme-purple .profile-image-container {
+            background: linear-gradient(135deg, #9C27B0, #673AB7);
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+        }
+
+        .profile-card.theme-purple .profile-image-container:hover {
+            background: linear-gradient(135deg, #AB47BC, #7986CB);
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
+        }
+
+        .profile-card.theme-orange .profile-image-container {
+            background: linear-gradient(135deg, #FF9800, #FF5722);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+        }
+
+        .profile-card.theme-orange .profile-image-container:hover {
+            background: linear-gradient(135deg, #FFB74D, #FF7043);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        /* Responsividade Imagem Perfil */
+        @media (max-width: 768px) {
+            .profile-card {
+                width: 140px;
+                margin: 8px 6px; /* Reduzido de 12px 8px */
+            }
+            .profile-image-container {
+                width: 105px;
+                height: 105px;
+                margin-bottom: 3px; /* Reduzido de 6px */
+            }
+            .profile-title {
+                font-size: 0.9em;
+                margin: 2px 0 1px 0; /* Reduzido de 4px 0 2px 0 */
+            }
+            
+            .profiles-container {
+                margin: 6px 0; /* Reduzido de 8px 0 */
+                padding: 2px 0; /* Reduzido de 4px 0 */
+                gap: 2px; /* Reduzido de 4px */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-card {
+                width: 120px;
+                margin: 6px 4px; /* Reduzido de 10px 12px */
+            }
+            .profile-image-container {
+                width: 90px;
+                height: 90px;
+                margin-bottom: 2px; /* Reduzido de 4px */
+                padding: 2px;
+            }
+            .profile-title {
+                font-size: 0.85em;
+                margin: 2px 0 1px 0; /* Reduzido de 4px 0 2px 0 */
+            }
+            
+            .profiles-container {
+                margin: 4px 0; /* Reduzido ainda mais */
+                padding: 2px 0;
+                gap: 2px;
+            }
+            
+            .profile-card:hover,
+            .profile-image-container:hover,
+            .profile-image:hover {
+                transform: none;
+                filter: none;
+            }
+        }
+
+        /* Telas muito pequenas - espaçamento mínimo */
+        @media (max-width: 360px) {
+            .profile-card {
+                width: 100px;
+                margin: 0; /* Removida completamente */
+            }
+            
+            .profile-image-container {
+                width: 75px;
+                height: 75px;
+                margin-bottom: 2px;
+            }
+            
+            .profile-title {
+                font-size: 0.8em;
+                margin: 1px 0;
+            }
+            
+            .profiles-container {
+                margin: 2px 0;
+                padding: 1px 0;
+                gap: 1px;
+            }
+        }
