@@ -45,7 +45,7 @@
   padding: 25px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   backdrop-filter: blur(10px);
-  margin-bottom: 200px;
+  margin-bottom: 20px;
 }
 
 .sumario-titulo {
@@ -154,4 +154,5 @@
 
 .subtopico-link:active {
   color: #1565c0;
+
 }
