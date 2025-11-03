@@ -1,70 +1,26 @@
-// === SCRIPT 1: NAVEGAÇÃO COM HASH + PAGINAÇÃO ===
-// Versão corrigida com melhor integração com players de vídeo
+// === main.js ===
+// Navegação entre páginas com hash, progresso e histórico
 
-let currentPage = 0;
+window.currentPage = 0;
 let totalPages = 0;
 let isInitialized = false;
 
-// Função aprimorada para pausar todos os vídeos da página atual
-function pauseAllVideosOnCurrentPage() {
-    const currentPageElement = document.querySelectorAll('.page')[currentPage];
-    if (!currentPageElement) return;
-    
-    // Pausar usando a função global dos players de vídeo
-    if (window.pauseAllVideoPlayers) {
-        window.pauseAllVideoPlayers();
-    }
-    
-    // Backup: pausar vídeos manualmente
-    const videoContainers = currentPageElement.querySelectorAll('.video-component');
-    videoContainers.forEach(container => {
-        const iframe = container.querySelector('.youtube-player');
-        if (iframe && iframe.contentWindow) {
-            try {
-                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-            } catch (e) {
-                console.log('Erro ao pausar vídeo via postMessage:', e);
-            }
-        }
-    });
-    
-    // Pausar vídeos HTML5
-    const html5Videos = currentPageElement.querySelectorAll('video');
-    html5Videos.forEach(video => {
-        if (!video.paused) {
-            video.pause();
-        }
-    });
-}
-
+// Inicializa as páginas e aplica o hash correto
 function initializePages() {
     const pages = document.querySelectorAll('.page');
     totalPages = pages.length;
-    
+
     if (!handleInitialHash()) {
         loadLastPage();
     }
-    
+
     updateNavigation();
     updateProgressBar();
     isInitialized = true;
     updateUrlHash();
-    
-    // Reinicializar players de vídeo quando necessário
-    setTimeout(reinitializeVideoPlayersIfNeeded, 500);
-}
 
-// Função para reinicializar players se necessário
-function reinitializeVideoPlayersIfNeeded() {
-    const currentPageElement = document.querySelectorAll('.page')[currentPage];
-    if (!currentPageElement) return;
-    
-    const videoContainers = currentPageElement.querySelectorAll('.video-component');
-    if (videoContainers.length > 0 && (!window.videoPlayers || window.videoPlayers.length === 0)) {
-        if (window.initializeVideoPlayers) {
-            window.initializeVideoPlayers();
-        }
-    }
+    // Garante que os players de vídeo sejam reinicializados
+    setTimeout(reinitializeVideoPlayersIfNeeded, 500);
 }
 
 function loadLastPage() {
@@ -73,85 +29,91 @@ function loadLastPage() {
         const pageNumber = parseInt(savedPage);
         if (pageNumber >= 0 && pageNumber < totalPages) {
             const pages = document.querySelectorAll('.page');
-            pages[currentPage].classList.remove('active');
-            currentPage = pageNumber;
-            pages[currentPage].classList.add('active');
+            pages[window.currentPage].classList.remove('active');
+            window.currentPage = pageNumber;
+            pages[window.currentPage].classList.add('active');
         }
     }
 }
 
 function saveCurrentPage() {
-    localStorage.setItem('guiaCiencias_ultimaPagina', currentPage.toString());
+    localStorage.setItem('guiaCiencias_ultimaPagina', window.currentPage.toString());
 }
 
+// Ir diretamente a uma página
 function goToPage(pageNumber) {
     pauseAllVideosOnCurrentPage();
-    
+
     const pages = document.querySelectorAll('.page');
-    pages[currentPage].classList.remove('active');
-    currentPage = pageNumber;
-    pages[currentPage].classList.add('active');
+    pages[window.currentPage].classList.remove('active');
+    window.currentPage = pageNumber;
+    pages[window.currentPage].classList.add('active');
+
     saveCurrentPage();
     updateNavigation();
     updateProgressBar();
     updateUrlHash();
-    
+
     setTimeout(reinitializeVideoPlayersIfNeeded, 300);
 }
 
+// Avançar ou voltar
 function changePage(direction) {
     pauseAllVideosOnCurrentPage();
-    
+
     const pages = document.querySelectorAll('.page');
-    pages[currentPage].classList.remove('active');
-    currentPage += direction;
-    if (currentPage < 0) currentPage = totalPages - 1;
-    if (currentPage >= totalPages) currentPage = 0;
-    pages[currentPage].classList.add('active');
+    pages[window.currentPage].classList.remove('active');
+    window.currentPage += direction;
+    if (window.currentPage < 0) window.currentPage = totalPages - 1;
+    if (window.currentPage >= totalPages) window.currentPage = 0;
+    pages[window.currentPage].classList.add('active');
+
     saveCurrentPage();
     updateNavigation();
     updateProgressBar();
     updateUrlHash();
-    
+
     setTimeout(reinitializeVideoPlayersIfNeeded, 300);
 }
 
+// Atualiza botões
 function updateNavigation() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    if (prevBtn) prevBtn.disabled = currentPage === 0;
-    if (nextBtn) nextBtn.disabled = currentPage === totalPages - 1;
+    if (prevBtn) prevBtn.disabled = window.currentPage === 0;
+    if (nextBtn) nextBtn.disabled = window.currentPage === totalPages - 1;
 }
 
+// Atualiza barra de progresso
 function updateProgressBar() {
     const progressBar = document.getElementById('progressBar');
     if (progressBar) {
-        const progress = ((currentPage + 1) / totalPages) * 100;
+        const progress = ((window.currentPage + 1) / totalPages) * 100;
         progressBar.style.width = progress + '%';
     }
 }
 
+// Voltar para a página inicial
 function goToHome() {
     pauseAllVideosOnCurrentPage();
-    
+
     const pages = document.querySelectorAll('.page');
-    pages[currentPage].classList.remove('active');
-    currentPage = 0;
-    pages[currentPage].classList.add('active');
+    pages[window.currentPage].classList.remove('active');
+    window.currentPage = 0;
+    pages[window.currentPage].classList.add('active');
+
     saveCurrentPage();
     updateNavigation();
     updateProgressBar();
     updateUrlHash();
-    
+
     setTimeout(reinitializeVideoPlayersIfNeeded, 300);
 }
 
 // === SISTEMA DE HASH/URL ===
 function updateUrlHash() {
     if (!isInitialized) return;
-    
-    const newHash = `#pagina${String(currentPage).padStart(2, '0')}`;
-    
+    const newHash = `#pagina${String(window.currentPage).padStart(2, '0')}`;
     if (window.location.hash !== newHash) {
         history.replaceState(null, null, newHash);
     }
@@ -159,50 +121,48 @@ function updateUrlHash() {
 
 function hashToPageNumber(hash) {
     if (!hash || !hash.startsWith('#pagina')) return null;
-    
     const pageStr = hash.replace('#pagina', '');
     const pageNum = parseInt(pageStr);
-    
     return (pageNum >= 0 && pageNum < totalPages) ? pageNum : null;
 }
 
 function handleInitialHash() {
     const hash = window.location.hash;
     if (!hash) return false;
-    
+
     const pageNum = hashToPageNumber(hash);
     if (pageNum === null) return false;
-    
+
     const pages = document.querySelectorAll('.page');
-    if (pages[currentPage]) {
-        pages[currentPage].classList.remove('active');
+    if (pages[window.currentPage]) {
+        pages[window.currentPage].classList.remove('active');
     }
-    currentPage = pageNum;
-    if (pages[currentPage]) {
-        pages[currentPage].classList.add('active');
+    window.currentPage = pageNum;
+    if (pages[window.currentPage]) {
+        pages[window.currentPage].classList.add('active');
     }
-    
+
     return true;
 }
 
 function handleHashChange() {
     if (!isInitialized) return;
-    
+
     const hash = window.location.hash;
     const pageNum = hashToPageNumber(hash);
-    
-    if (pageNum !== null && pageNum !== currentPage) {
+
+    if (pageNum !== null && pageNum !== window.currentPage) {
         pauseAllVideosOnCurrentPage();
-        
+
         const pages = document.querySelectorAll('.page');
-        pages[currentPage].classList.remove('active');
-        currentPage = pageNum;
-        pages[currentPage].classList.add('active');
-        
+        pages[window.currentPage].classList.remove('active');
+        window.currentPage = pageNum;
+        pages[window.currentPage].classList.add('active');
+
         saveCurrentPage();
         updateNavigation();
         updateProgressBar();
-        
+
         setTimeout(reinitializeVideoPlayersIfNeeded, 300);
     }
 }
@@ -214,10 +174,10 @@ function goToPageByHash(hash) {
     }
 }
 
-// Event Listeners
+// === EVENTOS DE TECLADO E TOQUE ===
 document.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft' && currentPage > 0) changePage(-1);
-    if (e.key === 'ArrowRight' && currentPage < totalPages - 1) changePage(1);
+    if (e.key === 'ArrowLeft' && window.currentPage > 0) changePage(-1);
+    if (e.key === 'ArrowRight' && window.currentPage < totalPages - 1) changePage(1);
 });
 
 let startX = 0;
@@ -233,8 +193,8 @@ document.addEventListener('touchend', function (e) {
     const diffX = startX - endX;
     const diffY = startY - endY;
     if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-        if (diffX > 0 && currentPage < totalPages - 1) changePage(1);
-        else if (diffX < 0 && currentPage > 0) changePage(-1);
+        if (diffX > 0 && window.currentPage < totalPages - 1) changePage(1);
+        else if (diffX < 0 && window.currentPage > 0) changePage(-1);
     }
 });
 
@@ -245,18 +205,19 @@ window.addEventListener('load', () => {
     if (totalPages === 0) initializePages();
 });
 
+// === DEBUG ===
 function getShareableUrl(pageNumber) {
     const baseUrl = window.location.href.split('#')[0];
-   const hash = `#pagina${String(pageNumber).padStart(2, '0')}`;
+    const hash = `#pagina${String(pageNumber).padStart(2, '0')}`;
     return baseUrl + hash;
 }
 
 function debugNavigation() {
     console.log({
-        currentPage: currentPage,
+        currentPage: window.currentPage,
         totalPages: totalPages,
         currentHash: window.location.hash,
-        shareableUrl: getShareableUrl(currentPage),
+        shareableUrl: getShareableUrl(window.currentPage),
         isInitialized: isInitialized
     });
 }
